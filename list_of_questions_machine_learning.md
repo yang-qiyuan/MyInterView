@@ -3,14 +3,14 @@
 ## Learning Theory
 
 1. Describe bias and variance with examples. 
-    - ### Bias
-        - Bias is the error due to overly simplistic assumptions in the learning algorithm. High bias can cause the model to miss the relevant relations between features and target outputs (underfitting), meaning the model is not complex enough to capture the underlying patterns of the data.
-    - #### High Bias Example in Machine Learning
-        - Imagine you are using a linear regression model to predict housing prices based on features such as square footage and the number of bedrooms. However, the relationship between these features and the price is actually non-linear. By assuming a linear relationship, your model is too simple to capture the complexities of the real-world function that determines housing prices, leading to systematic errors in predictions.
-    - ### Variance
-        - Variance refers to the error due to too much complexity in the learning algorithm. High variance can cause the model to model the random noise in the training data (overfitting), meaning the model learns patterns from the training data that don't generalize to unseen data.
-    - #### High Variance Example in Machine Learning
-        - Consider a decision tree model that you've allowed to grow without constraints until each leaf node represents only one training example. Such a model might perform perfectly on the training set, capturing every detail (including noise) in the dataset. However, this complexity makes the model highly sensitive to the specifics of the training data, and it is likely to perform poorly on new, unseen data because it has learned the noise as if it were a real pattern.
+#### Bias
+    Bias is the error due to overly simplistic assumptions in the learning algorithm. High bias can cause the model to miss the relevant relations between features and target outputs (underfitting), meaning the model is not complex enough to capture the underlying patterns of the data.
+#### High Bias Example in Machine Learning
+    Imagine you are using a linear regression model to predict housing prices based on features such as square footage and the number of bedrooms. However, the relationship between these features and the price is actually non-linear. By assuming a linear relationship, your model is too simple to capture the complexities of the real-world function that determines housing prices, leading to systematic errors in predictions.
+#### Variance
+    Variance refers to the error due to too much complexity in the learning algorithm. High variance can cause the model to model the random noise in the training data (overfitting), meaning the model learns patterns from the training data that don't generalize to unseen data.
+#### High Variance Example in Machine Learning
+    Consider a decision tree model that you've allowed to grow without constraints until each leaf node represents only one training example. Such a model might perform perfectly on the training set, capturing every detail (including noise) in the dataset. However, this complexity makes the model highly sensitive to the specifics of the training data, and it is likely to perform poorly on new, unseen data because it has learned the noise as if it were a real pattern.
 
 
 
@@ -27,15 +27,15 @@
 
     ### Mathematical Formulation
 
-    Given a dataset \(\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}\) where \(x_i\) represents the input features and \(y_i\) are the labels, and a model \(f\) parameterized by \(\theta\), the empirical risk \(R_{emp}(\theta)\) is defined as:
+    Given a dataset $\(\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}\) where \(x_i\)$ represents the input features and $\(y_i\)$ are the labels, and a model $\(f\)$ parameterized by \(\theta\), the empirical risk \(R_{emp}(\theta)\) is defined as:
 
-    \[R_{emp}(\theta) = \frac{1}{n} \sum_{i=1}^{n} L(f(x_i; \theta), y_i)\]
+    $$\[R_{emp}(\theta) = \frac{1}{n} \sum_{i=1}^{n} L(f(x_i; \theta), y_i)\]$$
 
-    Here, \(L\) is the loss function, \(n\) is the number of samples in the training dataset, \(f(x_i; \theta)\) denotes the model's prediction for input \(x_i\), and \(y_i\) are the true labels.
+    Here, $\(L\)$ is the loss function, $\(n\)$ is the number of samples in the training dataset, $\(f(x_i; \theta)\)$ denotes the model's prediction for input \(x_i\), and \(y_i\) are the true labels.
 
     ### Example
 
-    Consider a linear regression problem where the goal is to predict a person's weight based on their height. The model is a linear function \(f(x) = mx + b\), with \(x\) representing height, \(m\) and \(b\) as parameters to be learned, and \(f(x)\) as the predicted weight. Using mean squared error for the loss function, ERM will determine the values of \(m\) and \(b\) that minimize the average squared difference between the predicted and actual weights in the training dataset.
+    Consider a linear regression problem where the goal is to predict a person's weight based on their height. The model is a linear function $\(f(x) = mx + b\)$, with $\(x\)$ representing height, $\(m\)$ and $\(b\)$ as parameters to be learned, and $\(f(x)\)$ as the predicted weight. Using mean squared error for the loss function, ERM will determine the values of $\(m\)$ and $\(b\)$ that minimize the average squared difference between the predicted and actual weights in the training dataset.
 
     ### Challenges and Solutions
 
