@@ -27,11 +27,11 @@
 
     ### Mathematical Formulation
 
-    Given a dataset $\(\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}\) where \(x_i\)$ represents the input features and $\(y_i\)$ are the labels, and a model $\(f\)$ parameterized by \(\theta\), the empirical risk \(R_{emp}(\theta)\) is defined as:
+    Given a dataset $\(\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}\) where \(x_i\)$ represents the input features and $\(y_i\)$ are the labels, and a model $\(f\)$ parameterized by $\(\theta\)$, the empirical risk $\(R_{emp}(\theta)\)$ is defined as:
 
     $$\[R_{emp}(\theta) = \frac{1}{n} \sum_{i=1}^{n} L(f(x_i; \theta), y_i)\]$$
 
-    Here, $\(L\)$ is the loss function, $\(n\)$ is the number of samples in the training dataset, $\(f(x_i; \theta)\)$ denotes the model's prediction for input \(x_i\), and \(y_i\) are the true labels.
+    Here, $\(L\)$ is the loss function, $\(n\)$ is the number of samples in the training dataset, $\(f(x_i; \theta)\)$ denotes the model's prediction for input $\(x_i\)$, and $\(y_i\)$ are the true labels.
 
     ### Example
 
@@ -85,10 +85,32 @@
 
 
 
+1. State the uniform convergence theorem and derive it.
+
+    ## Uniform Convergence Theorem
+
+    The Uniform Convergence Theorem is a key concept in statistical learning theory. It states that, under certain conditions, the empirical risk (the average loss over the training set) of all functions in a hypothesis space will converge uniformly to their true risk (the expected loss over the entire data distribution) as the sample size increases. This convergence provides theoretical assurance that a model trained on a sufficiently large dataset will have similar performance on unseen data, assuming the data are drawn from the same distribution.
+
+    ### Formula
+
+    For any $\(\epsilon > 0\)$ and $\(\delta > 0\)$, there exists a sample size $\(m\)$ such that for all functions $\(f\)$ in a hypothesis space $\(H\)$, the following holds with probability at least $\(1 - \delta\)$:
+
+   $$ \[
+    P\left(\sup_{f \in H} |E_{(x,y) \sim D}[L(f(x), y)] - \frac{1}{m}\sum_{i=1}^m L(f(x_i), y_i)| < \epsilon\right) \geq 1 - \delta
+    \]$$
+
+    Where:
+    - $\(E_{(x,y) \sim D}\)$ denotes the expectation over the data distribution $\(D\)$,
+    - $\(L(f(x), y)\)$ is the loss of predicting $\(f(x)\)$ when the true label is $\(y\)$,
+    - $\(x_i, y_i\)$ are the samples drawn from $\(D\)$,
+    - $\(m\)$ is the sample size,
+    - $\(\sup\)$ denotes the supremum, indicating the worst-case deviation across all functions in the hypothesis space.
 
 
 
-1. State the uniform convergence theorem and derive it. 
+
+
+
 1. What is sample complexity bound of uniform convergence theorem? 
 1. What is error bound of uniform convergence theorem? 
 1. What is the bias-variance trade-off theorem? 
