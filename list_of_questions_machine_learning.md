@@ -109,11 +109,13 @@
 
 
 
-1. What is sample complexity bound of uniform convergence theorem? 
-1. What is error bound of uniform convergence theorem? 
+<!-- 1. What is sample complexity bound of uniform convergence theorem?  -->
+<!-- 1. What is error bound of uniform convergence theorem?  -->
 1. What is the bias-variance trade-off theorem? 
 1. From the bias-variance trade-off, can you derive the bound on training set size?
-1. What is the VC dimension? 
+1. What is the VC dimension?
+    [Link to explanation](https://datascience.stackexchange.com/questions/32557/what-is-the-exact-definition-of-vc-dimension)
+    
 1. What does the training set size depend on for a finite and infinite hypothesis set? Compare and contrast. 
 1. What is the VC dimension for an n-dimensional linear classifier? 
 1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
