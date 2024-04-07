@@ -2,7 +2,7 @@
 
 ## Learning Theory
 
-1. Describe bias and variance with examples. 
+## 1. Describe bias and variance with examples. 
     #### Bias
     Bias is the error due to overly simplistic assumptions in the learning algorithm. High bias can cause the model to miss the relevant relations between features and target outputs (underfitting), meaning the model is not complex enough to capture the underlying patterns of the data.
     #### High Bias Example in Machine Learning
@@ -14,7 +14,7 @@
 
 
 
-1. What is Empirical Risk Minimization?
+## 1. What is Empirical Risk Minimization?
     ### Empirical Risk Minimization (ERM)
 
     Empirical Risk Minimization (ERM) is a fundamental principle in statistical learning and machine learning that aims at minimizing the loss (or error) on the training dataset to identify the best model. The essence of ERM is to select the model or model parameters that reduce the empirical risk, essentially the average loss over the training samples.
@@ -43,7 +43,7 @@
 
     ERM underpins many machine learning algorithms, guiding the optimization process towards models that exhibit good performance on the provided data.
 
-1. Write the formula for training error and generalization error. Point out the differences.
+## 1. Write the formula for training error and generalization error. Point out the differences.
 
     In the context of machine learning, understanding the difference between training error and generalization error is crucial for developing models that not only perform well on the data they were trained on but also generalize well to unseen data.
 
