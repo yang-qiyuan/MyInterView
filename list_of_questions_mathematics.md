@@ -93,6 +93,7 @@
 1. Define self-information. What are its units?
 1. What are Shannon entropy and differential entropy?
 1. What is Kullback-Leibler (KL) divergence?
+1. What is Union bound and Hoeffding's inequality? 
 1. Can KL divergence be used as a distance measure?
 1. Define cross-entropy.
 1. What are structured probabilistic models or graphical models?

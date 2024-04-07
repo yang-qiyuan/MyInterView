@@ -43,8 +43,51 @@
 
     ERM underpins many machine learning algorithms, guiding the optimization process towards models that exhibit good performance on the provided data.
 
-1. What is Union bound and Hoeffding's inequality? 
-1. Write the formulae for training error and generalization error. Point out the differences.
+1. Write the formula for training error and generalization error. Point out the differences.
+
+    In the context of machine learning, understanding the difference between training error and generalization error is crucial for developing models that not only perform well on the data they were trained on but also generalize well to unseen data.
+
+    ### Training Error
+
+    **Definition:** Training error, also known as empirical error, is the average error that the model makes on the training dataset. It measures how well the model fits the data it was trained on.
+
+    **Formula:**
+
+    $$\[ \text{Training Error} = \frac{1}{N} \sum_{i=1}^{N} L(y_i, \hat{y}_i) \]$$
+
+    - $\(N\)$ is the number of training samples.
+    - $\(y_i\)$ is the actual label of the ith sample.
+    - $\(\hat{y}_i\)$ is the predicted label of the ith sample.
+    - $\(L\)$ is the loss function that measures the discrepancy between the actual and predicted labels.
+
+    ### Generalization Error
+
+    **Definition:** Generalization error, also known as out-of-sample error, is the expected error of the model on new, unseen data. It measures how well the learned model generalizes to data outside the training set.
+
+    **Formula:**
+
+    $$\[ \text{Generalization Error} = E[L(Y, \hat{Y})] \]$$
+
+    - $\(E\)$ denotes the expected value over the distribution of the data.
+    - $\(Y\)$ is the actual label of a new sample.
+    - $\(\hat{Y}\)$ is the predicted label of a new sample.
+    - $\(L\)$ is the loss function.
+
+    ### Differences
+
+    1. **Measurement Basis:** Training error is calculated on the same data the model was trained on, while generalization error is concerned with the model's performance on new, unseen data.
+
+    2. **Optimization:** Models are typically trained by minimizing the training error, but minimizing training error too much can lead to overfitting, where the model learns the noise in the training data rather than the underlying distribution. This usually increases the generalization error.
+
+    3. **Accessibility:** Training error can be directly calculated during the training process. In contrast, the true generalization error is often impractical to calculate because it requires the true distribution of the data, so it is usually estimated using techniques like cross-validation.
+
+    The goal in machine learning is to develop a model that achieves a low generalization error, indicating that it has learned the underlying patterns well enough to make accurate predictions on unseen data.
+
+
+
+
+
+
 1. State the uniform convergence theorem and derive it. 
 1. What is sample complexity bound of uniform convergence theorem? 
 1. What is error bound of uniform convergence theorem? 
