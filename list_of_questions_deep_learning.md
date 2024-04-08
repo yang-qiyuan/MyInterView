@@ -81,7 +81,6 @@
 1. Consider a RNN that has only output to hidden layer recurrence. What are its advantages or disadvantages compared to a RNNhaving only hidden to hidden recurrence? 
 1. What is Teacher forcing? Compare and contrast with BPTT.
 1. What is the disadvantage of using a strict teacher forcing technique? How to solve this?
-1. 
 1. Explain the vanishing/exploding gradient phenomenon for recurrent neural networks. (use scalar and vector input scenarios)
 1. Why don't we see the vanishing/exploding gradient phenomenon in feedforward networks? (weights are different in different layers - Random block intialization paper)
 1. What is the key difference in architecture of LSTMs/GRUs compared to traditional RNNs? (Additive update instead of multiplicative)
@@ -146,6 +145,5 @@
 
 ## Adversarial Networks
 
-1. Discuss state-of-the-art attack and defense techniques for adversarial models.
-1.  
+1. Generative Adversarial Nets (GAN)
 

@@ -114,11 +114,12 @@
 1. What is the bias-variance trade-off theorem? 
 1. From the bias-variance trade-off, can you derive the bound on training set size?
 1. What is the VC dimension?
-    [Link to explanation](https://datascience.stackexchange.com/questions/32557/what-is-the-exact-definition-of-vc-dimension)
-    
+    - [Link to explanation](https://datascience.stackexchange.com/questions/32557/what-is-the-exact-definition-of-vc-dimension)
+
 1. What does the training set size depend on for a finite and infinite hypothesis set? Compare and contrast. 
 1. What is the VC dimension for an n-dimensional linear classifier? 
-1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
+    n + 1
+
 1. Considering that Empirical Risk Minimization is a NP-hard problem, how does logistic regression and SVM loss work? 
 
 ## Model and feature selection
@@ -171,6 +172,7 @@
 1. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
 1. Logistic regression vs. SVMs: When to use which one? 
 ( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
+1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
 
 ## Bayesian Machine Learning
 1. What are the differences between “Bayesian” and “Freqentist” approach for Machine Learning?
