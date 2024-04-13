@@ -112,16 +112,64 @@
 <!-- 1. What is sample complexity bound of uniform convergence theorem?  -->
 <!-- 1. What is error bound of uniform convergence theorem?  -->
 1. Can you derive bias-variance decomposition?
-    ![Local Image](./Bias.png)
+    ![Local Image](./pics/Bias.png)
 <!-- 1. From the bias-variance trade-off, can you derive the bound on training set size? -->
 1. What is the VC dimension?
     - [Link to explanation](https://datascience.stackexchange.com/questions/32557/what-is-the-exact-definition-of-vc-dimension)
 
-1. What does the training set size depend on for a finite and infinite hypothesis set? Compare and contrast. 
+<!-- 1. What does the training set size depend on for a finite and infinite hypothesis set? Compare and contrast.  -->
 1. What is the VC dimension for an n-dimensional linear classifier? 
-    n + 1
+    - n + 1
 
-1. Considering that Empirical Risk Minimization is a NP-hard problem, how does logistic regression and SVM loss work? 
+<!-- 1. Considering that Empirical Risk Minimization is a NP-hard problem, how does logistic regression and SVM loss work?  -->
+
+
+# Basic Models
+## Support Vector Machine
+1. How can the SVM optimization function be derived from the logistic regression optimization function?
+1. What is a large margin classifier?
+1. Why SVM is an example of a large margin classifier?
+1. SVM being a large margin classifier, is it influenced by outliers? (Yes, if C is large, otherwise not)
+1. What is the role of C in SVM?
+1. In SVM, what is the angle between the decision boundary and theta?
+1. What is the mathematical intuition of a large margin classifier?
+1. What is a kernel in SVM? Why do we use kernels in SVM?
+1. What is a similarity function in SVM? Why it is named so?
+1. How are the landmarks initially chosen in an SVM? How many and where?
+1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
+1. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
+1. How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
+1. How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
+1. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
+1. Logistic regression vs. SVMs: When to use which one? 
+( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
+1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
+
+## Bayesian Machine Learning
+1. What are the differences between “Bayesian” and “Freqentist” approach for Machine Learning?
+1. Compare and contrast maximum likelihood and maximum a posteriori estimation.
+1. How does Bayesian methods do automatic feature selection?
+1. What do you mean by Bayesian regularization?
+1. When will you use Bayesian methods instead of Frequentist methods? (Small dataset, large feature set)
+
+## Naive Bayes
+
+## Clustering
+1. Describe the k-means algorithm.
+1. What is distortion function? Is it convex or non-convex?
+1. Tell me about the convergence of the distortion function.
+1. Topic: EM algorithm
+1. What is the Gaussian Mixture Model?
+1. Describe the EM algorithm intuitively. 
+1. What are the two steps of the EM algorithm
+1. Compare GMM vs GDA.
+
+
+## Boosting
+
+## Neural Networks
+### CNN
+### RNN
 
 ## Model and feature selection
 1. Why are model selection methods needed?
@@ -155,33 +203,6 @@
 1. What are the reasons for choosing a deep model as opposed to shallow model? (1. Number of regions O(2^k) vs O(k) where k is the number of training examples 2. # linear regions carved out in the function space depends exponentially on the depth. )
 1. How Deep Learning tackles the curse of dimensionality? 
 
-## Support Vector Machine
-1. How can the SVM optimization function be derived from the logistic regression optimization function?
-1. What is a large margin classifier?
-1. Why SVM is an example of a large margin classifier?
-1. SVM being a large margin classifier, is it influenced by outliers? (Yes, if C is large, otherwise not)
-1. What is the role of C in SVM?
-1. In SVM, what is the angle between the decision boundary and theta?
-1. What is the mathematical intuition of a large margin classifier?
-1. What is a kernel in SVM? Why do we use kernels in SVM?
-1. What is a similarity function in SVM? Why it is named so?
-1. How are the landmarks initially chosen in an SVM? How many and where?
-1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
-1. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
-1. How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
-1. How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
-1. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
-1. Logistic regression vs. SVMs: When to use which one? 
-( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
-1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
-
-## Bayesian Machine Learning
-1. What are the differences between “Bayesian” and “Freqentist” approach for Machine Learning?
-1. Compare and contrast maximum likelihood and maximum a posteriori estimation.
-1. How does Bayesian methods do automatic feature selection?
-1. What do you mean by Bayesian regularization?
-1. When will you use Bayesian methods instead of Frequentist methods? (Small dataset, large feature set)
-
 ## Regularization
 1. What is L1 regularization?
 1. What is L2 regularization?
@@ -193,15 +214,6 @@
 1. What are precision and recall?
 1. Describe t-test in the context of Machine Learning.
 
-## Clustering
-1. Describe the k-means algorithm.
-1. What is distortion function? Is it convex or non-convex?
-1. Tell me about the convergence of the distortion function.
-1. Topic: EM algorithm
-1. What is the Gaussian Mixture Model?
-1. Describe the EM algorithm intuitively. 
-1. What are the two steps of the EM algorithm
-1. Compare GMM vs GDA.
 
 ## Dimensionality Reduction
 1. Why do we need dimensionality reduction techniques? (data compression, speeds up learning algorithm and visualizing data)
@@ -221,6 +233,8 @@
 1. What type of regularization do one use in LSTM?
 1. What is Beam Search?
 1. How to automatically caption an image? (CNN + LSTM)
+
+## Machine Learning System Design
 
 ## Miscellaneous
 1. What is the difference between loss function, cost function and objective function?
