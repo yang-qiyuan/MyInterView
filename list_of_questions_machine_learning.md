@@ -131,9 +131,9 @@ SVM works by finding the hyperplane that best divides a dataset into two classes
 ### Formulation
 The basic idea is to solve the following optimization problem:
 
-$$\[ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 \]$$
+$$\[ \min_{\mathbf{w}, b} \frac{1}{2} \|\|\mathbf{w}\|\|^2 \]$$
 
-Subject to the constraints (for each labeled example $\((\mathbf{x}_i, y_i)\$)):
+Subject to the constraints (for each labeled example $\((\mathbf{x}_i, y_i)\)$):
 
 $$\[ y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 \]$$
 
