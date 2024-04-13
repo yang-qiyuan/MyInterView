@@ -126,6 +126,7 @@
 
 # Basic Models
 ## Support Vector Machine
+![Local Image](./pics/SVM_margin.png)
 ### Definition
 SVM works by finding the hyperplane that best divides a dataset into two classes of data points. The aim is to select a hyperplane with the greatest possible margin between support vectors in the two respective classes. Support vectors are the data points nearest to the hyperplane; the position and orientation of the hyperplane are determined based on these points.
 ### Formulation
