@@ -109,6 +109,7 @@
 
 
 
+
 <!-- 1. What is sample complexity bound of uniform convergence theorem?  -->
 <!-- 1. What is error bound of uniform convergence theorem?  -->
 1. Can you derive bias-variance decomposition?
@@ -126,7 +127,7 @@
 
 # Basic Models
 ## Support Vector Machine
-<img src="./pics/SVM_margin.png" alt="Local Image" width="300" height="200">
+<img src="./pics/SVM_margin.png" alt="Local Image" width="200" height="200">
 
 ### Definition
 SVM works by finding the hyperplane that best divides a dataset into two classes of data points. The aim is to select a hyperplane with the greatest possible margin between support vectors in the two respective classes. Support vectors are the data points nearest to the hyperplane; the position and orientation of the hyperplane are determined based on these points.
@@ -145,22 +146,42 @@ Here:
 - $\( \mathbf{x}_i \)$ represents the feature vectors.
 - $\( y_i \)$ are the labels associated with each feature vector, typically \(1\) or \(-1\) in a binary classification.
 
-1. How can the SVM optimization function be derived from the logistic regression optimization function?
+<!-- 1. How can the SVM optimization function be derived from the logistic regression optimization function?
 1. What is a large margin classifier?
 1. Why SVM is an example of a large margin classifier?
-1. SVM being a large margin classifier, is it influenced by outliers? (Yes, if C is large, otherwise not)
+1. SVM being a large margin classifier, is it influenced by outliers? (Yes, if C is large, otherwise not) -->
 1. What is the role of C in SVM?
+   The objective in soft margin SVM includes a term for slack variables, making the formulation:
+$$\[
+\min_{\mathbf{w}, b, \xi} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+\]
+with constraints:
+\[
+y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 - \xi_i \quad \text{and} \quad \xi_i \geq 0 \quad \text{for all } i
+\]$$
+where $\( \xi_i \)$ measures the misclassification degree of the datum $\( \mathbf{x}_i \)$.
+
+### Impact of $\( C \)$
+- **High $\( C \)$ Value**: Prioritizes fewer misclassifications (low bias but potentially high variance), leading to a narrower margin and possibly overfitting.
+- **Low $\( C \)$ Value**: More misclassifications are tolerated (higher bias but lower variance), leading to a wider margin and potentially better generalization.
+
+### Choosing $\( C \)$
+The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
+- It is typically determined through model selection methods such as cross-validation, where $\( C \)$ is varied to observe the effect on performance metrics like accuracy, precision, and recall.
+- A balance needs to be struck between the complexity of the model and its performance on unseen data, which often involves domain knowledge and experimental tuning.
+  
+
 1. In SVM, what is the angle between the decision boundary and theta?
-1. What is the mathematical intuition of a large margin classifier?
-1. What is a kernel in SVM? Why do we use kernels in SVM?
-1. What is a similarity function in SVM? Why it is named so?
-1. How are the landmarks initially chosen in an SVM? How many and where?
-1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
-1. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
-1. How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
-1. How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
-1. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
-1. Logistic regression vs. SVMs: When to use which one? 
+2. What is the mathematical intuition of a large margin classifier?
+3. What is a kernel in SVM? Why do we use kernels in SVM?
+4. What is a similarity function in SVM? Why it is named so?
+5. How are the landmarks initially chosen in an SVM? How many and where?
+6. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
+7. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
+8.  How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
+9.  How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
+10. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
+11. Logistic regression vs. SVMs: When to use which one? 
 ( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
 1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
 
@@ -189,6 +210,7 @@ Here:
 ## Neural Networks
 ### CNN
 ### RNN
+1. Describe LSTM
 
 ## Model and feature selection
 1. Why are model selection methods needed?
@@ -254,6 +276,8 @@ Here:
 1. How to automatically caption an image? (CNN + LSTM)
 
 ## Machine Learning System Design
+
+## Python
 
 ## Miscellaneous
 1. What is the difference between loss function, cost function and objective function?
