@@ -126,6 +126,23 @@
 
 # Basic Models
 ## Support Vector Machine
+### Definition
+SVM works by finding the hyperplane that best divides a dataset into two classes of data points. The aim is to select a hyperplane with the greatest possible margin between support vectors in the two respective classes. Support vectors are the data points nearest to the hyperplane; the position and orientation of the hyperplane are determined based on these points.
+### Formulation
+The basic idea is to solve the following optimization problem:
+
+$$\[ \min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 \]$$
+
+Subject to the constraints (for each labeled example $\((\mathbf{x}_i, y_i)\$)):
+
+$$\[ y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 \]$$
+
+Here:
+- $\( \mathbf{w} \)$ is the weight vector perpendicular to the hyperplane.
+- $\( b \)$ is the bias term, which shifts the hyperplane away from the origin.
+- $\( \mathbf{x}_i \)$ represents the feature vectors.
+- $\( y_i \)$ are the labels associated with each feature vector, typically \(1\) or \(-1\) in a binary classification.
+
 1. How can the SVM optimization function be derived from the logistic regression optimization function?
 1. What is a large margin classifier?
 1. Why SVM is an example of a large margin classifier?
