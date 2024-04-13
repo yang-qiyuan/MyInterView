@@ -111,8 +111,9 @@
 
 <!-- 1. What is sample complexity bound of uniform convergence theorem?  -->
 <!-- 1. What is error bound of uniform convergence theorem?  -->
-1. What is the bias-variance trade-off theorem? 
-1. From the bias-variance trade-off, can you derive the bound on training set size?
+1. Can you derive bias-variance decomposition?
+    ![Local Image](./Bias.png)
+<!-- 1. From the bias-variance trade-off, can you derive the bound on training set size? -->
 1. What is the VC dimension?
     - [Link to explanation](https://datascience.stackexchange.com/questions/32557/what-is-the-exact-definition-of-vc-dimension)
 
