@@ -181,7 +181,7 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
         = 1 + 2x_1 y_1 + 2x_2 y_2 + x_1^2 y_1^2 + 2x_1 y_1 x_2 y_2 + x_2^2 y_2^2$\
         \
     $\phi(x) = [1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, \sqrt{2}x_1 x_2, x_2^2]$
-1. What is a similarity function in SVM? Why it is named so?
+1. Explain why does RBF kernel maps to infinite dimensions
 - Radial based kernel (RBF) mapping to infinity dimension explanation:
   $$e^{\frac{1}{2}(a-b)^2} = e^{\frac{1}{2}(a^2 + b^2 - 2ab)} = e^{-\frac{1}{2}(a^2 + b ^2)}\cdot e^{ab}$$
   then create the Taylor expansion of $e^{ab}$,
@@ -191,7 +191,7 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
   then we have
   $$e^{\frac{1}{2}(a-b)^2} = e^{-\frac{1}{2}(a^2 + b ^2)} \cdot [(3)]\\
   =  (S, S\sqrt{\frac{1}{1!}}a, S\sqrt{\frac{1}{2!}}(a)^2, S\sqrt{\frac{1}{3!}}(a)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(a)^{\infty})\cdot \\(S, S\sqrt{\frac{1}{1!}}b, S\sqrt{\frac{1}{2!}}(b)^2, S\sqrt{\frac{1}{3!}}(b)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(b)^{\infty})\ \ $$
-  where $S = \sqrt()
+  where $S = \sqrt{e^{-\frac{1}{2}(a^2 + b ^2)}}$
 1. How are the landmarks initially chosen in an SVM? How many and where?
 2. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
 3. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
