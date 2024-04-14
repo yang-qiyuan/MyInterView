@@ -171,17 +171,34 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
 - A balance needs to be struck between the complexity of the model and its performance on unseen data, which often involves domain knowledge and experimental tuning.
   
 
-1. In SVM, what is the angle between the decision boundary and theta?
-2. What is the mathematical intuition of a large margin classifier?
+<!-- 1. In SVM, what is the angle between the decision boundary and theta? -->
+<!-- 2. What is the mathematical intuition of a large margin classifier? -->
 3. What is a kernel in SVM? Why do we use kernels in SVM?
-4. What is a similarity function in SVM? Why it is named so?
-5. How are the landmarks initially chosen in an SVM? How many and where?
-6. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
-7. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
-8.  How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
-9.  How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
-10. Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
-11. Logistic regression vs. SVMs: When to use which one? 
+- A kernel in Support Vector Machines (SVM) is a function that enables SVMs to classify non-linearly separable data by implicitly mapping it into a higher-dimensional space. This process, known as the "kernel trick," avoids the computationally expensive task of direct transformations. Kernels, such as linear, polynomial, radial basis function (RBF), and sigmoid, enhance SVM's versatility, allowing it to handle complex patterns and feature interactions effectively, thus broadening its applicability in solving varied classification and regression challenges in machine learning.
+- Example of a kernel trick (polynomial):
+    $$K(x, y) = (1 + x \cdot y)^2$$
+    $K(x, y) = (1 + x_1 y_1 + x_2 y_2)^2
+        = 1 + 2x_1 y_1 + 2x_2 y_2 + x_1^2 y_1^2 + 2x_1 y_1 x_2 y_2 + x_2^2 y_2^2$\
+        \
+    $\phi(x) = [1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, \sqrt{2}x_1 x_2, x_2^2]$
+1. What is a similarity function in SVM? Why it is named so?
+- Radial based kernel (RBF) mapping to infinity dimension explanation:
+  $$e^{\frac{1}{2}(a-b)^2} = e^{\frac{1}{2}(a^2 + b^2 - 2ab)} = e^{-\frac{1}{2}(a^2 + b ^2)}\cdot e^{ab}$$
+  then create the Taylor expansion of $e^{ab}$,
+  $$e^{ab} = 1 + \frac{1}{1!}ab + \frac{1}{2!}(ab)^2 + \frac{1}{3!}(ab)^3+\cdots +\frac{1}{\infty!}(ab)^{\infty}$$
+  then convert this to dot product,
+  $$e^{ab} = (1, \sqrt{\frac{1}{1!}}a, \sqrt{\frac{1}{2!}}(a)^2, \sqrt{\frac{1}{3!}}(a)^3,\cdots,\sqrt{\frac{1}{\infty!}}(a)^{\infty})\cdot \\(1, \sqrt{\frac{1}{1!}}b, \sqrt{\frac{1}{2!}}(b)^2, \sqrt{\frac{1}{3!}}(b)^3,\cdots,\sqrt{\frac{1}{\infty!}}(b)^{\infty})\ \ (3)$$ 
+  then we have
+  $$e^{\frac{1}{2}(a-b)^2} = e^{-\frac{1}{2}(a^2 + b ^2)} \cdot [(3)]\\
+  =  (S, S\sqrt{\frac{1}{1!}}a, S\sqrt{\frac{1}{2!}}(a)^2, S\sqrt{\frac{1}{3!}}(a)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(a)^{\infty})\cdot \\(S, S\sqrt{\frac{1}{1!}}b, S\sqrt{\frac{1}{2!}}(b)^2, S\sqrt{\frac{1}{3!}}(b)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(b)^{\infty})\ \ $$
+  where $S = \sqrt()
+1. How are the landmarks initially chosen in an SVM? How many and where?
+2. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
+3. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
+4.  How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
+5.  How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
+6.  Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
+7.  Logistic regression vs. SVMs: When to use which one? 
 ( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
 1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
 
