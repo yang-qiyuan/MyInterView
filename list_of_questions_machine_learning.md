@@ -126,6 +126,8 @@
 
 
 # Basic Models
+## Linear Regression
+
 ## Support Vector Machine
 <img src="./pics/SVM_margin.png" alt="Local Image" width="200" height="200">
 
@@ -192,15 +194,40 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
   $$e^{\frac{1}{2}(a-b)^2} = e^{-\frac{1}{2}(a^2 + b ^2)} \cdot [(3)]\\
   =  (S, S\sqrt{\frac{1}{1!}}a, S\sqrt{\frac{1}{2!}}(a)^2, S\sqrt{\frac{1}{3!}}(a)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(a)^{\infty})\cdot \\(S, S\sqrt{\frac{1}{1!}}b, S\sqrt{\frac{1}{2!}}(b)^2, S\sqrt{\frac{1}{3!}}(b)^3,\cdots,S\sqrt{\frac{1}{\infty!}}(b)^{\infty})\ \ $$
   where $S = \sqrt{e^{-\frac{1}{2}(a^2 + b ^2)}}$
-1. How are the landmarks initially chosen in an SVM? How many and where?
-2. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
-3. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
-4.  How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
-5.  How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
-6.  Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem)
-7.  Logistic regression vs. SVMs: When to use which one? 
-( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel)
-1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension? 
+1. How do you choose the right parameters (C and gamma) for an SVM model? What impact do they have on the model?
+   - Gamma defines how far the influence of a single training example reaches, with low values meaning ‘far’ and high values meaning ‘close’. The gamma parameter interacts with the RBF kernel and affects the curvature of the decision boundary. A large gamma value leads to a decision boundary that closely fits around the training data, which can be too wavy, potentially capturing noise and outliers (overfitting). A small gamma value results in a more linear decision boundary.
+   - The parameter C acts as a regularization parameter in an SVM. A small value of C makes the decision surface smooth and simple, with a higher tolerance for misclassifications (higher bias and lower variance). A large C aims for a lower error on the training data, potentially at the cost of simplicity, leading to a decision surface that tries hard to classify all training examples correctly (lower bias and higher variance).
+2. In what situations would you prefer to use SVM over other classification algorithms like logistic regression or decision trees?
+   - SVMs are particularly effective in high-dimensional spaces, where the number of features is greater than the number of samples.
+   - If the decision boundaries are highly non-linear, SVM with appropriate kernel functions (like RBF) can model complex interactions between features much better than logistic regression, which typically assumes linear boundaries unless explicitly extended with polynomial or interaction terms.
+   - SVMs are effective when a clear margin of separation is needed. They not only focus on classifying training examples correctly but also on maximizing the decision margin, which can lead to better generalization capabilities on unseen data compared to decision trees, which might overfit more easily.
+   - suitable for binary classification
+   - Can control outliers (C)
+   - Handle sparse data well. **Reason**: SVMs make their classification decision based only on a subset of the training data, known as the support vectors. This means that the SVM model does not need to use all the data features but focuses only on those that are most informative for defining the decision boundary. In sparse datasets, where most features for most samples are zero, this characteristic significantly reduces the complexity and computational burden, as irrelevant features (those typically at zero) don't impact the model.
+1. Can SVMs be used for multi-class classification? If so, explain how that is typically handled.
+   - ### 1. One-vs-One (OvO) Approach:
+   - **How It Works**: In this method, a binary SVM model is trained for every pair of classes. For a problem with \( N \) classes, this results in \( \frac{N(N-1)}{2} \) classifiers. Each classifier distinguishes between a pair of classes.
+   - **Decision Making**: During prediction, every classifier votes for a class, and the class with the most votes is selected as the final prediction.
+   - **Advantages**: This method is effective because each classifier only needs to learn to distinguish between two classes, which can simplify the learning problem.
+   - **Drawbacks**: The number of classifiers grows quadratically with the number of classes, which can lead to increased computational cost and complexity when dealing with a large number of classes.
+
+   - ### 2. One-vs-All (OvA) or One-vs-Rest (OvR) Approach:
+   - **How It Works**: In this approach, one SVM model is trained per class to distinguish the samples of that class from the samples of all other classes. For \( N \) classes, \( N \) classifiers are trained.
+   - **Decision Making**: Each classifier produces a confidence score that indicates the likelihood of an input belonging to its class. The classifier with the highest confidence score determines the class label.
+   - **Advantages**: The computational complexity is lower compared to the OvO method since only \( N \) classifiers are needed, making it more scalable.
+   - **Drawbacks**: The classifiers may be biased towards the majority class in imbalanced datasets because each classifier is trained against samples from all other classes.
+
+
+
+<!-- 2. How are the landmarks initially chosen in an SVM? How many and where?
+1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
+2. What is the difference between logistic regression and SVM without a kernel? (Only in implementation – one is much more efficient and has good optimization packages)
+3.  How does the SVM parameter C affect the bias/variance trade off? (Remember C = 1/lambda; lambda increases means variance decreases)
+4.  How does the SVM kernel parameter sigma^2 affect the bias/variance trade off?
+5.  Can any similarity function be used for SVM? (No, have to satisfy Mercer’s theorem) -->
+<!-- 7.  Logistic regression vs. SVMs: When to use which one? 
+( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel) -->
+<!-- 1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension?  -->
 
 ## Bayesian Machine Learning
 1. What are the differences between “Bayesian” and “Freqentist” approach for Machine Learning?
