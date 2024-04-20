@@ -127,7 +127,57 @@
 
 # Basic Models
 ## Linear Regression
+### Formulation
+$$y = \beta_0 + \beta_1x + \epsilon$$
+where:
+- $y$ is the dependent variable (the variable we are trying to predict),
+- $x$ is the independent variable (the variable used to make predictions),
+- $\beta_0$ is the intercept (the value of $y$ when $x$ is 0),
+- $\beta_1$ is the slope coefficient (it represents the change in $y$ for a one-unit change in $x$),
+- $\epsilon$ is the error term (the difference between the observed values and the values predicted by the model).
+  
+Objective function:
+$$\text{Minimize} \quad S = \sum_{i=1}^n (y_i - (\beta_0 + \beta_1x_i))^2$$
+where,
+- $n$ is the number of observations
+- $y_i$ and $x_i$ are the observed values of the dependent and independent variables
+- $S$ is the sum of the squared differences (also known as the residual sum of squares).
+  
 
+1. Can you explain the difference between simple and multiple linear regression?
+   - Simple linear regression models the relationship between two variables, making it straightforward but limited in handling real-world complexity. Multiple linear regression handles multiple influences simultaneously, offering a more nuanced understanding of the factors that affect the dependent variable.
+2. How are the coefficients in a linear regression model estimated? What method is commonly used for this purpose?
+    - Closed form solution: $\beta = (X^T X)^{-1} X^T y$
+<!-- 3. What is the formula for the least squares estimator in linear regression? -->
+4. What are the key assumptions made by linear regression models?
+    ### 1. Linearity
+   - **Summary:** The relationship between the predictors and the outcome is assumed to be linear.
+
+   ### 2. Independence of Errors
+   - **Summary:** The residuals (errors) are expected to be independent from each other.
+
+   ### 3. Homoscedasticity
+   - **Summary:** The variance of the residuals should be constant across all levels of the independent variables.
+
+   ### 4. Normality of Errors
+   - **Summary:** For purposes of inference, the residuals should follow a normal distribution.
+
+   ### 5. No Perfect Multicollinearity
+   - **Summary:** The independent variables should not be perfectly correlated with each other.
+
+   ### 6. Exogeneity of Independent Variables
+   - **Summary:** The predictors must not be correlated with the error terms to avoid biased estimates.
+<!-- 1. How does the assumption of homoscedasticity affect a linear regression model? -->
+<!-- 2. How can linear regression be adapted to model non-linear relationships? -->
+   
+3. What is multicollinearity and why is it a problem for linear regression?
+   - Multicollinearity in linear regression occurs when two or more predictors are highly correlated, making it difficult to isolate the individual effect of each predictor. This condition can lead to unstable estimates of coefficients, inflated standard errors, and thus unreliable statistical tests. 
+     
+4. How to resolve multicollinearity?
+    - To address multicollinearity, methods such as removing correlated predictors, combining them into a single variable, or applying regularization techniques like ridge regression are often used.
+### Ridge Regression
+
+   
 ## Support Vector Machine
 <img src="./pics/SVM_margin.png" alt="Local Image" width="200" height="200">
 
