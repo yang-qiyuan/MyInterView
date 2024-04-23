@@ -176,8 +176,22 @@ where,
 4. How to resolve multicollinearity?
     - To address multicollinearity, methods such as removing correlated predictors, combining them into a single variable, or applying regularization techniques like ridge regression are often used.
 ### Ridge Regression
+#### Definition
+Ridge regression—also known as L2 regularization—is one of several types of regularization for linear regression models.
+$$\text{minimize} \quad J(\boldsymbol{\beta}) = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T (\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda \boldsymbol{\beta}^T \boldsymbol{\beta}$$
+where:
 
-   
+- $(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})$ is the residual sum of squares (RSS),
+- $\lambda$ is a non-negative regularization parameter that controls the amount of shrinkage: the larger the value of $\lambda$, the greater the amount of shrinkage
+- $\lambda \boldsymbol{\beta}^T \boldsymbol{\beta}$ is the regularization term that penalizes the magnitude of the coefficients.
+
+L2 penalty shrinks coefficients towards zero but never to absolute zero; although model feature weights may become negligibly small, they never equal zero in ridge regression. 
+### Lasso Regression
+#### Definition
+Lasso regression—also known as L1 regularization—is a form of regularization for linear regression models
+<img src="./pics/Lasso.png" alt="Locak Image" width="600" height="80">
+
+L1 regularization works by reducing coefficients to zero, essentially eliminating those independent variables from the model. Both lasso regression and ridge regression thus reduce model complexity,
 ## Support Vector Machine
 <img src="./pics/SVM_margin.png" alt="Local Image" width="200" height="200">
 
