@@ -191,9 +191,30 @@ L2 penalty shrinks coefficients towards zero but never to absolute zero; althoug
 Lasso regression—also known as L1 regularization—is a form of regularization for linear regression models
 <img src="./pics/Lasso.png" alt="Locak Image" width="600" height="80">
 
-L1 regularization works by reducing coefficients to zero, essentially eliminating those independent variables from the model. Both lasso regression and ridge regression thus reduce model complexity,
+L1 regularization works by reducing coefficients to zero, essentially eliminating those independent variables from the model. Both lasso regression and ridge regression thus reduce model complexity
+## Logistic Regression
+Logistic regression is used for predicting the probability of a binary outcome, based on one or more predictor variables. The model applies the logistic function to a linear combination of predictors to predict the probability that the dependent variable equals a certain category.
+
+### Logistic Function
+The sigmoid function is defined as:
+$$\sigma(z) = \frac{1}{1 + e^{-z}}$$
+
+### Model formulation
+The logistic regression model can be expressed as:
+$$P(Y = 1 | X) = \sigma(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n)$$
+where $\beta_0, \beta_1, \beta_2, \ldots, \beta_n$ are coefficients.
+
+### Log-likelihood function
+$$\ell(\beta) = \sum_{i=1}^N \left[ Y_i \log(\sigma(X_i^T \beta)) + (1 - Y_i) \log(1 - \sigma(X_i^T \beta)) \right]$$
+
+### Log odds
+$$\log \left(\frac{P(Y = 1 | X)}{1 - P(Y = 1 | X)}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n$$
+
+
+
 ## Support Vector Machine
 <img src="./pics/SVM_margin.png" alt="Local Image" width="200" height="200">
+
 
 ### Definition
 SVM works by finding the hyperplane that best divides a dataset into two classes of data points. The aim is to select a hyperplane with the greatest possible margin between support vectors in the two respective classes. Support vectors are the data points nearest to the hyperplane; the position and orientation of the hyperplane are determined based on these points.
