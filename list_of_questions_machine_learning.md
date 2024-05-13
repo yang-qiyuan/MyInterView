@@ -210,6 +210,9 @@ $$\ell(\beta) = \sum_{i=1}^N \left[ Y_i \log(\sigma(X_i^T \beta)) + (1 - Y_i) \l
 ### Log odds
 $$\log \left(\frac{P(Y = 1 | X)}{1 - P(Y = 1 | X)}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n$$
 
+s
+
+
 
 
 ## Support Vector Machine
