@@ -542,12 +542,12 @@ A real-world application where Naive Bayes is particularly effective is in email
             - For each data point $x_i$ in $X$:
                 - Compute the distance between $x_i$ and each centroid $c_j$.
                 - Assign $x_i$ to the cluster with the nearest centroid:
-                $$ L[i] = \arg\min_j \| x_i - c_j \|^2 $$
+                $L[i] = \arg\min_j \| x_i - c_j \|^2$
 
         - **Update Step**:
             - For each cluster $j \in \{1, 2, \ldots, k\}$:
                 - Update the centroid $c_j$ to be the mean of all data points assigned to cluster $j$:
-                $$ c_j = \frac{1}{|S_j|} \sum_{x_i \in S_j} x_i $$
+                $c_j = \frac{1}{|S_j|} \sum_{x_i \in S_j} x_i$
                 - where $S_j$ is the set of data points assigned to cluster $j$.
 
     3. **End Repeat**.
