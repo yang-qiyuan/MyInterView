@@ -441,7 +441,6 @@ This is the dual form of the SVM optimization problem.
 6. When will you use Bayesian methods instead of Frequentist methods? (Small dataset, large feature set) -->
 
 ## Naive Bayes
-# Naive Bayes Classifier
 
 ## Definition
 The Naive Bayes classifier is a probabilistic machine learning model used for classification tasks. It is based on Bayes' theorem, with the "naive" assumption that the features are conditionally independent given the class label. Despite this simplification, Naive Bayes often performs well in practice, especially for text classification problems such as spam detection and sentiment analysis.
@@ -521,16 +520,91 @@ A real-world application where Naive Bayes is particularly effective is in email
 
 ## Clustering
 1. Describe the k-means algorithm.
+   ### Sudo code
+
+    ## Input:
+    - $k$: Number of clusters
+    - $X$: Dataset containing $n$ data points
+
+    ## Output:
+    - $C$: Set of $k$ cluster centroids
+    - $L$: Cluster assignments for each data point
+
+    ## Pseudocode:
+
+    1. **Initialize**:
+        - Select $k$ initial cluster centroids randomly from the dataset $X$.
+        - Let $C = \{c_1, c_2, \ldots, c_k\}$ be the set of centroids.
+        - Let $L$ be an array of cluster assignments for each data point.
+
+    2. **Repeat until convergence**:
+        - **Assignment Step**:
+            - For each data point $x_i$ in $X$:
+                - Compute the distance between $x_i$ and each centroid $c_j$.
+                - Assign $x_i$ to the cluster with the nearest centroid:
+                $$ L[i] = \arg\min_j \| x_i - c_j \|^2 $$
+
+        - **Update Step**:
+            - For each cluster $j \in \{1, 2, \ldots, k\}$:
+                - Update the centroid $c_j$ to be the mean of all data points assigned to cluster $j$:
+                $$ c_j = \frac{1}{|S_j|} \sum_{x_i \in S_j} x_i $$
+                - where $S_j$ is the set of data points assigned to cluster $j$.
+
+    3. **End Repeat**.
+
+    4. **Return**:
+        - The final set of centroids $C$.
+        - The final cluster assignments $L$.
+### How to choose K? 
+   - elbow method
+   - Silhouette Score 
+   - cross validation \
+   [check the link for answer](https://medium.com/analytics-vidhya/how-to-determine-the-optimal-k-for-k-means-708505d204eb)
+
+### What is the computational complexity of the K-means algorithm?
+The computational complexity of the K-means algorithm is $O(n \cdot k \cdot i \cdot d)$, where:
+- \(n\) is the number of data points.
+- \(k\) is the number of clusters.
+- \(i\) is the number of iterations until convergence.
+- \(d\) is the number of dimensions (features) of the data.
+
+In each iteration, the algorithm assigns each of the $n$ data points to the nearest cluster centroid (which involves $O(k \cdot d)$ operations for each data point) and then updates the centroids (which involves $O(n \cdot d)$ operations).
+
+### What are some common applications of K-means clustering in industry?
+K-means clustering is widely used in various industries for different purposes, including:
+- **Customer Segmentation**: Grouping customers based on purchasing behavior, demographics, or other attributes to target marketing efforts more effectively.
+- **Image Compression**: Reducing the number of colors in an image by clustering pixel values and replacing them with the cluster centroids.
+- **Document Clustering**: Organizing large collections of documents into clusters based on content similarity for information retrieval and topic identification.
+- **Anomaly Detection**: Identifying unusual patterns or outliers in datasets, such as fraud detection in finance.
+- **Market Basket Analysis**: Grouping products based on purchase patterns to understand customer buying behavior and optimize product placement.
+
+### What are the main advantages of the K-means algorithm?
+- **Simplicity**: K-means is easy to understand and implement, making it accessible for beginners.
+- **Scalability**: The algorithm scales well to large datasets and high-dimensional data due to its relatively low computational complexity.
+- **Efficiency**: K-means is computationally efficient, with linear complexity concerning the number of data points, clusters, and iterations.
+- **Ease of Interpretation**: The resulting clusters and centroids are straightforward to interpret, which can be useful for gaining insights from the data.
+
+### What are some limitations of the K-means algorithm?
+- **Choice of K**: Determining the appropriate number of clusters \(K\) can be challenging and often requires domain knowledge or additional methods like the Elbow Method or Silhouette Score.
+- **Sensitivity to Initialization**: The algorithm's performance can be highly dependent on the initial placement of centroids, which can lead to different results for different runs.
+- **Assumes Spherical Clusters**: K-means assumes clusters are spherical and of similar size, which may not be suitable for datasets with irregular or elongated cluster shapes.
+- **Not Robust to Outliers**: K-means can be significantly affected by outliers, as they can distort the position of centroids and lead to suboptimal clustering.
+- **Feature Scaling**: The algorithm is sensitive to the scale of the data, so features must be appropriately scaled before applying K-means to ensure meaningful distance computations.
+
+
 1. What is distortion function? Is it convex or non-convex?
-1. Tell me about the convergence of the distortion function.
-1. Topic: EM algorithm
-1. What is the Gaussian Mixture Model?
-1. Describe the EM algorithm intuitively. 
-1. What are the two steps of the EM algorithm
-1. Compare GMM vs GDA.
+2. Tell me about the convergence of the distortion function.
+3. Topic: EM algorithm
+4. What is the Gaussian Mixture Model?
+5. Describe the EM algorithm intuitively. 
+6. What are the two steps of the EM algorithm
+7. Compare GMM vs GDA.
 
 
 ## Boosting
+### AdaBoost
+### xgBoost
+### Gradient Boost Decision Tree (GBDT)
 
 ## Neural Networks
 ### CNN
