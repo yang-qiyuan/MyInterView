@@ -210,7 +210,8 @@ $$\ell(\beta) = \sum_{i=1}^N \left[ Y_i \log(\sigma(X_i^T \beta)) + (1 - Y_i) \l
 ### Log odds
 $$\log \left(\frac{P(Y = 1 | X)}{1 - P(Y = 1 | X)}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n$$
 
-s
+### Related questions
+
 
 
 
@@ -242,14 +243,15 @@ Here:
 1. SVM being a large margin classifier, is it influenced by outliers? (Yes, if C is large, otherwise not) -->
 1. What is the role of C in SVM?
    The objective in soft margin SVM includes a term for slack variables, making the formulation:
-$$\[
-\min_{\mathbf{w}, b, \xi} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
-\]
-with constraints:
-\[
-y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 - \xi_i \quad \text{and} \quad \xi_i \geq 0 \quad \text{for all } i
-\]$$
-where $\( \xi_i \)$ measures the misclassification degree of the datum $\( \mathbf{x}_i \)$.
+$$\min_{w, b} \frac{1}{2} \|w\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i (w \cdot x_i + b))$$
+where:
+
+- \( w \) is the weight vector.
+- \( b \) is the bias term.
+- \( C \) is the regularization parameter.
+- \( n \) is the number of training examples.
+- \( y_i \) is the true label of the \( i \)-th training example.
+- \( x_i \) is the feature vector of the \( i \)-th training example.
 
 ### Impact of $\( C \)$
 - **High $\( C \)$ Value**: Prioritizes fewer misclassifications (low bias but potentially high variance), leading to a narrower margin and possibly overfitting.
@@ -305,7 +307,8 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
    - **Advantages**: The computational complexity is lower compared to the OvO method since only \( N \) classifiers are needed, making it more scalable.
    - **Drawbacks**: The classifiers may be biased towards the majority class in imbalanced datasets because each classifier is trained against samples from all other classes.
 
-
+4. Dual SVM derivation
+   
 
 <!-- 2. How are the landmarks initially chosen in an SVM? How many and where?
 1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
