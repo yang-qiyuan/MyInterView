@@ -308,7 +308,99 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
    - **Drawbacks**: The classifiers may be biased towards the majority class in imbalanced datasets because each classifier is trained against samples from all other classes.
 
 4. Dual SVM derivation
-   
+## Primal Problem
+The primal form of the Support Vector Machine (SVM) optimization problem is given by:
+
+$$ \min_{\mathbf{w}, b, \xi} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^n \xi_i $$
+
+subject to:
+
+$$
+\begin{aligned}
+    &y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i, \quad \forall i \\
+    &\xi_i \geq 0, \quad \forall i
+\end{aligned}
+$$
+
+where:
+- $\mathbf{w}$ is the weight vector.
+- $b$ is the bias term.
+- $\xi_i$ are the slack variables.
+- $C$ is the regularization parameter.
+- $(\mathbf{x}_i, y_i)$ are the training samples.
+
+## Lagrangian
+To derive the dual form, we start by writing the Lagrangian for the primal problem. Introduce the Lagrange multipliers $\alpha_i \geq 0$ for the inequality constraints $y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i$ and $\mu_i \geq 0$ for the non-negativity constraints $\xi_i \geq 0$:
+
+$$
+\mathcal{L}(\mathbf{w}, b, \xi, \alpha, \mu) = \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^n \xi_i - \sum_{i=1}^n \alpha_i \left[ y_i (\mathbf{w}^\top \mathbf{x}_i + b) - 1 + \xi_i \right] - \sum_{i=1}^n \mu_i \xi_i
+$$
+
+## Dual Problem
+To find the dual problem, we need to minimize the Lagrangian with respect to the primal variables $\mathbf{w}$, $b$, and $\xi$.
+
+### Minimization with Respect to $\mathbf{w}$
+Set the gradient of $\mathcal{L}$ with respect to $\mathbf{w}$ to zero:
+
+$$
+\frac{\partial \mathcal{L}}{\partial \mathbf{w}} = \mathbf{w} - \sum_{i=1}^n \alpha_i y_i \mathbf{x}_i = 0
+$$
+
+Thus,
+
+$$
+\mathbf{w} = \sum_{i=1}^n \alpha_i y_i \mathbf{x}_i
+$$
+
+### Minimization with Respect to $b$
+Set the gradient of $\mathcal{L}$ with respect to $b$ to zero:
+
+$$
+\frac{\partial \mathcal{L}}{\partial b} = - \sum_{i=1}^n \alpha_i y_i = 0
+$$
+
+Thus,
+
+$$
+\sum_{i=1}^n \alpha_i y_i = 0
+$$
+
+### Minimization with Respect to $\xi_i$
+Set the gradient of $\mathcal{L}$ with respect to $\xi_i$ to zero:
+
+$$
+\frac{\partial \mathcal{L}}{\partial \xi_i} = C - \alpha_i - \mu_i = 0
+$$
+
+Since $\mu_i \geq 0$, we get:
+
+$$
+\alpha_i \leq C
+$$
+
+### Substituting Back
+Substitute $\mathbf{w} = \sum_{i=1}^n \alpha_i y_i \mathbf{x}_i$ back into the Lagrangian, we get:
+
+$$
+\mathcal{L}(\alpha) = \sum_{i=1}^n \alpha_i - \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j
+$$
+
+The dual problem is then:
+
+$$
+\max_{\alpha} \sum_{i=1}^n \alpha_i - \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \mathbf{x}_i^\top \mathbf{x}_j
+$$
+
+subject to:
+
+$$
+\begin{aligned}
+    &\sum_{i=1}^n \alpha_i y_i = 0 \\
+    &0 \leq \alpha_i \leq C, \quad \forall i
+\end{aligned}
+$$
+
+This is the dual form of the SVM optimization problem.
 
 <!-- 2. How are the landmarks initially chosen in an SVM? How many and where?
 1. Can we apply the kernel trick to logistic regression? Why is it not used in practice then?
@@ -320,14 +412,112 @@ The selection of $\( C \)$ is crucial for the performance of the SVM classifier:
 ( Let's say n and m are the number of features and training samples respectively. If n is large relative to m use log. Reg. or SVM with linear kernel, If n is small and m is intermediate, SVM with Gaussian kernel, If n is small and m is massive, Create or add more fetaures then use log. Reg. or SVM without a kernel) -->
 <!-- 1. How is the VC dimension of a SVM bounded although it is projected to an infinite dimension?  -->
 
-## Bayesian Machine Learning
 1. What are the differences between “Bayesian” and “Freqentist” approach for Machine Learning?
-1. Compare and contrast maximum likelihood and maximum a posteriori estimation.
-1. How does Bayesian methods do automatic feature selection?
-1. What do you mean by Bayesian regularization?
-1. When will you use Bayesian methods instead of Frequentist methods? (Small dataset, large feature set)
+
+### Bayesian Approach
+- **Probability Interpretation**: Degree of belief, updated with new data.
+- **Parameters**: Treated as random variables with prior distributions.
+- **Inference**: Based on the posterior distribution using Bayes' theorem.
+- **Prediction**: Averages over the posterior distribution, incorporating parameter uncertainty.
+- **Model Comparison**: Uses Bayes factors and incorporates prior information.
+- **Uncertainty**: Naturally handled through posterior distributions.
+- **Computation**: Often more computationally intensive (e.g., MCMC methods).
+
+### Frequentist Approach
+- **Probability Interpretation**: Long-run frequency of events.
+- **Parameters**: Treated as fixed but unknown quantities.
+- **Inference**: Based on sampling distributions, using methods like MLE.
+- **Prediction**: Uses point estimates of parameters.
+- **Model Comparison**: Uses criteria like likelihood ratio tests, AIC, or BIC.
+- **Uncertainty**: Quantified through confidence intervals and p-values.
+- **Computation**: Typically less computationally intensive.
+
+### Practical Considerations
+- **Bayesian**: Incorporates prior knowledge and provides richer information about uncertainty but can be computationally demanding.
+- **Frequentist**: Simpler to implement, computationally efficient, but may not handle prior information or uncertainty as effectively.
+<!-- 3. Compare and contrast maximum likelihood and maximum a posteriori estimation.
+4. How does Bayesian methods do automatic feature selection?
+5. What do you mean by Bayesian regularization?
+6. When will you use Bayesian methods instead of Frequentist methods? (Small dataset, large feature set) -->
 
 ## Naive Bayes
+# Naive Bayes Classifier
+
+## Definition
+The Naive Bayes classifier is a probabilistic machine learning model used for classification tasks. It is based on Bayes' theorem, with the "naive" assumption that the features are conditionally independent given the class label. Despite this simplification, Naive Bayes often performs well in practice, especially for text classification problems such as spam detection and sentiment analysis.
+
+## Formulation
+
+### Bayes' Theorem
+Bayes' theorem provides the foundation for the Naive Bayes classifier. It relates the conditional and marginal probabilities of random events:
+
+$$
+P(C \mid X) = \frac{P(X \mid C) \cdot P(C)}{P(X)}
+$$
+
+where:
+- $P(C \mid X)$ is the posterior probability of class $C$ given the feature vector $X$.
+- $P(X \mid C)$ is the likelihood of feature vector $X$ given class $C$.
+- $P(C)$ is the prior probability of class $C$.
+- $P(X)$ is the marginal probability of the feature vector $X$.
+
+### Naive Bayes Assumption
+The Naive Bayes classifier assumes that the features are conditionally independent given the class label. This simplifies the likelihood $P(X \mid C)$ as follows:
+
+$$
+P(X \mid C) = \prod_{i=1}^n P(X_i \mid C)
+$$
+
+where $X_i$ is the $i$-th feature in the feature vector $X$.
+
+### Posterior Probability
+Using the Naive Bayes assumption, the posterior probability $P(C \mid X)$ can be expressed as:
+
+$$
+P(C \mid X) \propto P(C) \cdot \prod_{i=1}^n P(X_i \mid C)
+$$
+
+where $\propto$ denotes proportionality, as $P(X)$ is constant for all classes and can be omitted for the purpose of classification.
+
+### Classification Rule
+The Naive Bayes classifier assigns a class label $\hat{C}$ to the feature vector $X$ by choosing the class with the highest posterior probability:
+
+$$
+\hat{C} = \arg\max_{C} P(C) \cdot \prod_{i=1}^n P(X_i \mid C)
+$$
+
+### Types of Naive Bayes Classifiers
+There are several variants of the Naive Bayes classifier depending on the assumptions made about the distribution of the features:
+- **Gaussian Naive Bayes**: Assumes that the features follow a Gaussian (normal) distribution.
+- **Multinomial Naive Bayes**: Assumes that the features follow a multinomial distribution, commonly used for discrete data like word counts in text classification.
+- **Bernoulli Naive Bayes**: Assumes that the features are binary-valued (0 or 1).
+
+### Example (Gaussian Naive Bayes)
+For Gaussian Naive Bayes, the likelihood $P(X_i \mid C)$ is given by the Gaussian distribution:
+
+$$
+P(X_i \mid C) = \frac{1}{\sqrt{2\pi \sigma_{C,i}^2}} \exp \left( -\frac{(X_i - \mu_{C,i})^2}{2\sigma_{C,i}^2} \right)
+$$
+
+where $\mu_{C,i}$ and $\sigma_{C,i}$ are the mean and standard deviation of the feature $X_i$ for class $C$.
+
+### Summary
+The Naive Bayes classifier is a simple yet effective classification algorithm that leverages the power of Bayes' theorem and the assumption of feature independence. It is computationally efficient and works well for high-dimensional data, making it a popular choice for many real-world applications.
+
+## Some interview questions realted to Naive Bayes
+
+###  Describe a situation where you would prefer to use Naive Bayes over other classification algorithms.
+Naive Bayes is particularly useful in scenarios where the features are conditionally independent given the class label, as it simplifies the computation significantly. One such situation is text classification, especially spam detection. In spam detection, each email is represented as a bag of words, and the presence of one word in an email is often independent of the presence of another word given the email's spam or non-spam status. Naive Bayes performs well in this context due to its simplicity, effectiveness, and ability to handle large vocabularies efficiently.
+
+### How does the Naive Bayes classifier perform on high-dimensional data?
+Naive Bayes performs well on high-dimensional data due to its assumption of conditional independence, which simplifies the computation of the likelihoods. This makes Naive Bayes computationally efficient and scalable, even with a large number of features. The classifier does not suffer from the curse of dimensionality to the same extent as some other algorithms because it treats each feature independently. However, if the independence assumption is violated, the performance may degrade, although Naive Bayes often still performs reasonably well in practice.
+
+### Can Naive Bayes be used for regression problems? Why or why not?
+Naive Bayes is inherently a classification algorithm and is not typically used for regression problems. This is because Naive Bayes models the probability of discrete class labels given the features, while regression involves predicting a continuous output variable. For regression tasks, algorithms like linear regression, polynomial regression, or other regression models are more appropriate. However, there are Bayesian approaches to regression, such as Bayesian linear regression, but these are distinct from the Naive Bayes classifier.
+
+### Give an example of a real-world application where Naive Bayes is particularly effective.
+A real-world application where Naive Bayes is particularly effective is in email spam filtering. In spam filtering, emails are classified as either spam or non-spam based on their content. The Naive Bayes classifier is well-suited for this task because the presence or absence of specific words in an email (features) can be used to estimate the probability that an email belongs to the spam class. The independence assumption works reasonably well here because the occurrence of one word is largely independent of another word, given the class label. Naive Bayes classifiers have been successfully used in many spam detection systems due to their simplicity, efficiency, and relatively good performance.
+
 
 ## Clustering
 1. Describe the k-means algorithm.
