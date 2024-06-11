@@ -520,7 +520,7 @@ A real-world application where Naive Bayes is particularly effective is in email
 
 ## Clustering
 1. Describe the k-means algorithm.
-   ### Sudo code
+    ## Sudo code
 
     ## Input:
     - $k$: Number of clusters
@@ -529,8 +529,6 @@ A real-world application where Naive Bayes is particularly effective is in email
     ## Output:
     - $C$: Set of $k$ cluster centroids
     - $L$: Cluster assignments for each data point
-
-    ## Pseudocode:
 
     1. **Initialize**:
         - Select $k$ initial cluster centroids randomly from the dataset $X$.
@@ -592,13 +590,15 @@ K-means clustering is widely used in various industries for different purposes, 
 - **Feature Scaling**: The algorithm is sensitive to the scale of the data, so features must be appropriately scaled before applying K-means to ensure meaningful distance computations.
 
 
-1. What is distortion function? Is it convex or non-convex?
-2. Tell me about the convergence of the distortion function.
+<!-- 1. What is distortion function? Is it convex or non-convex?
+2. Tell me about the convergence of the distortion function. -->
 3. Topic: EM algorithm
 4. What is the Gaussian Mixture Model?
 5. Describe the EM algorithm intuitively. 
 6. What are the two steps of the EM algorithm
-7. Compare GMM vs GDA.
+7. LDA
+8. GDA
+9. Compare GMM vs GDA.
 
 
 ## Boosting
