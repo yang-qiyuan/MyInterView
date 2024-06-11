@@ -204,7 +204,8 @@ The logistic regression model can be expressed as:
 $$P(Y = 1 | X) = \sigma(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n)$$
 where $\beta_0, \beta_1, \beta_2, \ldots, \beta_n$ are coefficients.
 
-### Log-likelihood function
+### Log-likelihood function (loss function)
+This is related to cross-entropy loss
 $$\ell(\beta) = \sum_{i=1}^N \left[ Y_i \log(\sigma(X_i^T \beta)) + (1 - Y_i) \log(1 - \sigma(X_i^T \beta)) \right]$$
 
 ### Log odds
