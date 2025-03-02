@@ -15,6 +15,7 @@
 1. Hidden Markov Assumption for BiGram
    
    The assumption that the probability of a word depends only on the previous word is called a Markov assumption:
+
    $$
         P(w_n|w_{1:n-1}) \approx P(w_n|w_{n-1})
    $$
@@ -38,17 +39,19 @@
    The perplexity (sometimes abbreviated as PP or PPL) of a language model on a test set is the inverse probability of the test set (one over the probability of the test set), normalized by the number of words.
 
 1. The formulation of perplexity.
+   
    $$
     \text{perplexity}(W) = \sqrt[N]{\prod_{i=1}^{N} \frac{1}{P(w_i)}}
     $$
+    
     where:
     - $N$ is the total number of words in the sentence
     - $w_i$ is the i-th word in the sentence
-1. What is smoothing ?
+2. What is smoothing ?
    
    To keep a language model from assigning zero probability to these unseen events, we’ll have to shave off a bit of probability mass from some more frequent events and give it to the events we’ve never seen. This modification is called **smoothing** or **discounting**
 
-2. Laplacian Smoothing Formulation
+3. Laplacian Smoothing Formulation
    
    Add one to all the n-gram counts, before we normalize them into probabilities
 
@@ -98,6 +101,7 @@ Search based decoding algorithms are not suitable for open-ended question since 
 #### Evaluation Method
 1. BLEU Score
    ![bleu](../pics/bleu.png)
+
    Pros
    - Efficient and scalabe
    - Easy to compute and widely used
@@ -109,13 +113,13 @@ Search based decoding algorithms are not suitable for open-ended question since 
 
 2. ROUGE Score
    ![rouge](../pics/rouge.png)
+
    Pros
    - Effective for text summarization
    - Consider recall and precision, making it suitable for evaluating tasks where **capturing key information** is more important than exact phrasing
   
    Cons
    - Handle synonymous and paraphrase better than BLEU
-   Cons
    - Sensitive to length and quality
    - Not always ideal for MT and open-ended question
   
