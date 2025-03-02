@@ -62,12 +62,68 @@
     - $\alpha$ is the hyper parameter
     - $V$ is the vocab size
 
+### Natural Language Generation
+#### Decoding Method
+1. Greedy Decoding
+   ![greedy decoding](../pics/greedy_decode.png)
+
+   At each time step t in generation, the output yt is chosen by computing the probability for each word in the vocabulary and then choosing the highest probability word (the argmax). One problem of this is that **high probability at time t does not mean high probability at time t+1**.
+
+2. Beam Search Decoding
+   ![beam search](../pics/beam_search.png)
+   
+    We keep k possible tokens at each step. This fixed-size memory footprint k is called the beam width. **But the formula does above does not consider the length of the sentences.** So, we normalize the score by the sentence length.
+    ![beam norm](../pics/beam_norm.png)
+
+Search based decoding algorithms are not suitable for open-ended question since the answers are too generic most of the times.
+
+3. Top-k sampling
+   
+   Top-k sampling is a simple **generalization of greedy decoding**. Instead of choosing the single most probable word to generate, we first truncate the distribution to the top k most likely words, renormalize to produce a legitimate probability distribution, and then randomly sample from within these k words according to their renormalized probabilities. When k == 1, it equals to greedy decoding. Good for Generating diverse text.
+
+4. Nucleus or top-p sampling.
+   ![topp](../pics/topp.png)
+   
+   The assumption is that the shape of the the probability distribution over words differs in different contexts. It aims to keep not the top k words, but the top p percent of the probability mass.
+
+5. Temperature sampling
+   ![temperature](../pics/temperature.png)
+
+   In temperature sampling, we don’t truncate the distribution, but instead **reshape** it. Thus when larger numbers are passed to a softmax the result is a distribution with increased probabilities of the most high-probability words and decreased probabilities of the low probability words, making the distribution more greedy. 
+   
+
+
+
+   
+#### Evaluation Method
+1. BLEU Score
+   ![bleu](../pics/bleu.png)
+   Pros
+   - Efficient and scalabe
+   - Easy to compute and widely used
+  
+   Cons
+   - Ignore semantic meaning
+   - No handling of synonymous or paraphrases
+   - Lack of robustness for short senctence
+
+2. ROUGE Score
+   ![rouge](../pics/rouge.png)
+   Pros
+   - Effective for text summarization
+   - Consider recall and precision, making it suitable for evaluating tasks where **capturing key information** is more important than exact phrasing
+  
+   Cons
+   - Handle synonymous and paraphrase better than BLEU
+   Cons
+   - Sensitive to length and quality
+   - Not always ideal for MT and open-ended question
+  
+
 
 ### Recurrent Neural Networks
 
 ### Neural Machine Translation
-
-### Natural Language Generation
 
 
 
