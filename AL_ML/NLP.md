@@ -78,7 +78,7 @@
     We keep k possible tokens at each step. This fixed-size memory footprint k is called the beam width. **But the formula does above does not consider the length of the sentences.** So, we normalize the score by the sentence length.
     ![beam norm](../pics/beam_norm.png)
 
-Search based decoding algorithms are not suitable for open-ended question since the answers are too generic most of the times.
+Search based decoding algorithms are not suitable for open-ended question since the answers are **too generic** most of the times.
 
 3. Top-k sampling
    
@@ -100,6 +100,9 @@ Search based decoding algorithms are not suitable for open-ended question since 
    
 #### Evaluation Method
 1. BLEU Score
+   
+   This is a precision based method, measuring the target matching vs the generated texts. This measurement could be important when necessary words matters, conciseness matters, fluency matters. Typically used for machine translation.
+
    ![bleu](../pics/bleu.png)
 
    Pros
@@ -112,6 +115,9 @@ Search based decoding algorithms are not suitable for open-ended question since 
    - Lack of robustness for short senctence
 
 2. ROUGE Score
+
+    This score is recall based, it measures the target matching over the reference texts. It works for tasks that require capturing the import points in the reference text such as text summarization.
+
    ![rouge](../pics/rouge.png)
 
    Pros
@@ -119,7 +125,6 @@ Search based decoding algorithms are not suitable for open-ended question since 
    - Consider recall and precision, making it suitable for evaluating tasks where **capturing key information** is more important than exact phrasing
   
    Cons
-   - Handle synonymous and paraphrase better than BLEU
    - Sensitive to length and quality
    - Not always ideal for MT and open-ended question
   

@@ -128,6 +128,9 @@ Cons:
 - Adds up two more learnable parameters.
 - Less effective for CNN.
 
+#### Differences between pre norm and post norm
+
+
 #### Post Deepnorm
 
 
