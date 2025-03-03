@@ -22,8 +22,33 @@ Preventing vanishing gradient.
 - It could enable different heads to focus on different parts when handling sentences
 
 ### Flash Attention
+It is an IO-aware exact attention algorithm that reduces memory reads/writes between GPU high-bandwidth memory (HBM) and on-chip SRAM by utilizing tiling techniques.
 
-### MLA
+![flash attn](../pics/flashattn.png)
+1. **Tiling**: Restructure Algorithm to load block by block from HBM to SRAM to compute attention. It decomposed softmax into small blocks and then rescale it. (One key point is the calculation of softmax without overflow).
+   - Load inputs by blocks from HBM to SRAM
+   - On the chip, compute attn output wrt the block
+   - Update output on HBM by scaling
+2. **Recomputation**: Do not store attn. matrix from forward, recompute it in backward. Efficient since normalization factors have been stored previously.  
+3. 
+
+
+### Multihead Latent Attention
+A picture of types of attn:
+![mqa](../pics/mqa.png)
+
+MLA seeks a balance between memory efficiency and modeling accuracy.
+
+The basic idea of MLA is to compress the attention input $h_t$ into a low-dimensional latent vector with dimension $d_c$, where $d_c$ is much lower than the original ($h_n$ · $d_h$). 
+
+**Problems with RoPE:**
+It has problems when applied RoPE to it since when multiplying Q and K together, the up-projection matrix should be contracted. However, since RoPE are index-dependent, it cannot did so. 
+
+![drope](../pics/decoupled_rope.png)
+
+Instead, the author decoupled the RoPE into two separate vectors and concatenate with the key and value.
+
+![mla](../pics/mla.png)
 
 
 ## Positional Encoding
@@ -67,7 +92,7 @@ Let $d_h$ denote the hidden state size of the model, $d_{qkv}$ denote the dimens
 
 1. **The size of the Scaled Dot Product Attention** is: $W_Q + W_K + W_B + W_O$ = $(d_{h}*d_{qkv} + d_{qkv})*3h + d_{h}*d_{h} + d_{h}$ = $4*d_{h}^2$
    
-2. **The size of the MLP** is: $d_{h}*d_{ffn} + d_{h} + d_{h}*d_{ffn} + d_{h}$
+2. **The size of the MLP** is: $d_{h}*d_{ffn} + d_{h} + d_{h}*d_{ffn} + d_{ffn}$
 
 ![layernorm](../pics/layernorm.png)
 3. **The size of Layer Norm** is: $\beta, \gamma$ = $d_{h}$, which is $d_{h}*2$
@@ -80,6 +105,10 @@ Let $d_h$ denote the hidden state size of the model, $d_{qkv}$ denote the dimens
 
 # Model Training
 ## Pretraining
+### Initialization
+1. Random Initialization
+2. Xavier and Kaiming Initialization
+
 ### Norm
 #### RMS Norm
 Formulation:
@@ -115,7 +144,10 @@ Cons:
 ### LoRA
 
 
+## Inference
+### What is speculative decoding?
 
+### Why LLM repeats themselves, and how to solve this problem?
 
 
 
