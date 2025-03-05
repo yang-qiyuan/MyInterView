@@ -87,7 +87,7 @@ Search based decoding algorithms are not suitable for open-ended question since 
 4. Nucleus or top-p sampling.
    ![topp](../pics/topp.png)
    
-   The assumption is that the shape of the the probability distribution over words differs in different contexts. It aims to keep not the top k words, but the top p percent of the probability mass.
+   The assumption is that the **shape of the the probability distribution** over words **differs** in different contexts. It aims to keep not the top k words, but the top p percent of the probability mass.
 
 5. Temperature sampling
    ![temperature](../pics/temperature.png)

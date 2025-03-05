@@ -6,7 +6,8 @@
 ### What is Q K V?
 
 ### Why division by $\sqrt{d*k}$
-Normalizing the distribution of softmax, preventing gradient vanishing.
+Normalizing the distribution of softmax, preventing gradient vanishing. This could also be realted to initilization.
+
 ### Are there other ways to achieve similar functions to self-attention?
 ### Are there any other way than divided by $\sqrt{d*k}$?
 Any methods that could keep the weights within the inverval is good. See Google T5 (good normalization).
@@ -107,7 +108,19 @@ Let $d_h$ denote the hidden state size of the model, $d_{qkv}$ denote the dimens
 ## Pretraining
 ### Initialization
 1. Random Initialization
-2. Xavier and Kaiming Initialization
+2. Truncated Initialization
+   
+   There are more variations in nomral init, and the result is bounded in uniform init. So, combining these two advantages in both, we have the truncated init. a and b are two standard deviation away from the mean. The real variance is $\gamma \sigma^2$. To get the real variance, one should pass the standard deviations as $\frac{\sigma}{\sqrt{\gamma}}$.
+3. Xavier Initialization
+   
+   Xavier initialization, also known as Glorot initialization, is a method for setting neural network weights to keep the variance of activations roughly the same across layers. It does this by drawing initial weights from a distribution with a variance that depends on the number of input and output neurons, helping to mitigate the vanishing or exploding gradient problems during training.
+
+4. NTK init
+   
+   Neural Tangent Kernel (NTK) initialization is a weight initialization scheme designed to ensure that deep neural networks behave like kernel methods in the infinite-width limit, preserving signal propagation and avoiding vanishing or exploding gradients. It scales weights based on the layer width, typically using $\mathcal{N}(0, \frac{2}{\text{fan-in}})$ for ReLU networks, ensuring stable gradient dynamics during training. So given the previous case in Xavier init, we need the $D=N(0, \frac{1}{m})$ as an initialization. So we could divide the output by $\frac{1}{\sqrt{m}}$ to get the same effect.
+
+   ![ntkinit](../pics/ntkinit.png)
+
 
 ### Norm
 #### RMS Norm
@@ -129,7 +142,9 @@ Cons:
 - Less effective for CNN.
 
 #### Differences between pre norm and post norm
+[prenorm vs postnorm](https://sh-tsang.medium.com/review-pre-ln-transformer-on-layer-normalization-in-the-transformer-architecture-b6c91a89e9ab)
 
+![prepostnorm](../pics/pre_postnorm.png)
 
 #### Post Deepnorm
 
@@ -145,12 +160,30 @@ Cons:
 ## Finetuning
 ### Difference between LoRA and SFT
 ### LoRA
+![loraform](../pics/loraform.png)
+The assumption is that during pretraining, the parameters of the models are very large. However, the intrinsic dimension of downstream tasks are not large. So, instead of finetuning the full weights, only modify A and B. The typical r is 8, under somecases, r could even be equal to 1. 
+
+#### Does Lora really save the computational amount?
+It depends on how lora is realized. We have two different ways of implementing lora. Two ways of initialization is as follows:
+
+![lorainit](../pics/lora_init.png)
+
+please see [link](https://kexue.fm/archives/9590/comment-page-2#comments) for detailed explanation.
+
+
+
 
 
 ## Inference
 ### What is speculative decoding?
 
+It speeds up autoregressive text generation by using a fast proposal model to predict several tokens at once, which are then selectively confirmed by a slower, more accurate model. Keypoint is that you should have **a fast approximation model**.
+
+![speculative decoding](../pics/speculativedecode.png)
+
 ### Why LLM repeats themselves, and how to solve this problem?
+
+
 
 
 
