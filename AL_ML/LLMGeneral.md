@@ -146,6 +146,8 @@ Cons:
 
 ![prepostnorm](../pics/pre_postnorm.png)
 
+PreNorm tends to be helpful to stabalize the model training since it allows more freely residual connections. However, it is easy to be trapped into local optima. PostNorm is more difficult to train but it helps adds the depth of the models.
+
 #### Post Deepnorm
 
 
