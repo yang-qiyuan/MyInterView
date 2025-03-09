@@ -61,7 +61,7 @@ class Block(nn.Moudle):
         self.ln2 = nn.LayerNorm(n_embed)
     
     def forward(self, x):
-        # residual connection
+        # residual connection with pre-norm
         x = x + self.attn(self.ln1(x))
         x = x + self.mlp(self.ln2(x))
         return x
@@ -77,12 +77,12 @@ The algorithm works by iteratively merging the most frequent pair of consecutive
 Collected from the original paper: https://arxiv.org/abs/1508.07909
 """
 class BPE():
+    """
+    Given a list of integers, return a dictionary of counts of consecutive pairs
+    Example: {"l o w": 5, "l o w e r": 2} -> {('l', 'o'): 2, ('o', 'w'): 2, ...}
+    Optionally allows to update an existing dictionary of counts
+    """
     def get_stats(self, vocab):
-        """
-        Given a list of integers, return a dictionary of counts of consecutive pairs
-        Example: {"l o w": 5, "l o w e r": 2} -> {"lo w": 5, "lo w e r": 2} for one merge
-        Optionally allows to update an existing dictionary of counts
-        """
         pairs = defaultdict(int)
         for word, freq in vocabs.items():
             symbols = word.split()
@@ -90,7 +90,11 @@ class BPE():
             for i in range(len(symbols)-1):
                 pairs[symbols[i], symbols[i+1]] += freq
         return pairs
-
+    """
+    Given a list of integers, return a dictionary of counts of consecutive pairs
+    Example: {"l o w": 5, "l o w e r": 2} -> {"lo w": 5, "lo w e r": 2} for one merge
+    Optionally allows to update an existing dictionary of counts
+    """
     def merge(self, pair, vocab_in):
         """
         Merge frequency pairs of characters in a word

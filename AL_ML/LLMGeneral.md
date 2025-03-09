@@ -5,11 +5,11 @@
 
 ### What is Q K V?
 
-### Why division by $\sqrt{d*k}$
+### Why division by $\sqrt{d_k}$, where k is the head size
 Normalizing the distribution of softmax, preventing gradient vanishing. This could also be realted to initilization.
 
 ### Are there other ways to achieve similar functions to self-attention?
-### Are there any other way than divided by $\sqrt{d*k}$?
+### Are there any other way than divided by $\sqrt{d_k}$?
 Any methods that could keep the weights within the inverval is good. See Google T5 (good normalization).
 ### They reason why transformers use Layer Norm
 Preventing vanishing gradient.
@@ -102,6 +102,13 @@ Let $d_h$ denote the hidden state size of the model, $d_{qkv}$ denote the dimens
 
 ## Tokenizer
 ### Byte Pair Encoding
+
+1. Start with a vocabulary containing only characters and an "end-of-word" token.
+2. Using corpus of texts, find the most common adjacent pair of characters "a,b"; add "ab"as a subword.
+3. Replace instances of the character pair with the new subword; repeat until the desired vocabulary size.
+
+It effectively solves the problem of the problem of the out-of-vocabulary problem.
+
 ### Sentence Piece
 
 # Model Training
@@ -146,13 +153,18 @@ Cons:
 
 ![prepostnorm](../pics/pre_postnorm.png)
 
-PreNorm tends to be helpful to stabalize the model training since it allows more freely residual connections. However, it is easy to be trapped into local optima. PostNorm is more difficult to train but it helps adds the depth of the models.
+PreNorm tends to be helpful to stabalize the model training since it allows **more freely** residual connections. However, it is easy to be trapped into local optima. PostNorm is more difficult to train but it helps adds the depth of the models.
 
 #### Post Deepnorm
 
 
 
 ### Warm up
+
+### Batch Skipping (Palm Paper)
+
+### Weight Decay
+### Gradient Clipping
 
 ### ZeRO
 #### ZeRO 1
@@ -171,6 +183,27 @@ It depends on how lora is realized. We have two different ways of implementing l
 ![lorainit](../pics/lora_init.png)
 
 please see [link](https://kexue.fm/archives/9590/comment-page-2#comments) for detailed explanation.
+
+
+### Proximal Policy Optimization (PPO)
+
+On-Policy Formulation:
+$$
+\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta (a_t | s_t) G_t \right]
+$$
+
+where:
+
+- \( J(\theta) \) is the objective function, typically the expected cumulative reward.
+- \( \pi_\theta (a_t | s_t) \) is the policy parameterized by \( \theta \), giving the probability of taking action \( a_t \) in state \( s_t \).
+- \( \nabla_\theta \log \pi_\theta (a_t | s_t) \) is the score function, representing how the log-probability of an action changes with respect to policy parameters.
+- \( G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k \) is the return, i.e., the sum of future discounted rewards from time step \( t \).
+- \( \gamma \in (0,1] \) is the discount factor.
+- The expectation \( \mathbb{E}_{\tau \sim \pi_\theta} \) is taken over trajectories \( \tau \) sampled from the policy \( \pi_\theta \).
+
+
+
+### Direct Preference Optimization (DPO)
 
 
 
