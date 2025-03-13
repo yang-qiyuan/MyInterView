@@ -13,6 +13,7 @@ Normalizing the distribution of softmax, preventing gradient vanishing. This cou
 Any methods that could keep the weights within the inverval is good. See Google T5 (good normalization).
 ### They reason why transformers use Layer Norm
 Preventing vanishing gradient.
+### why cannot kv use only one matrix (use the same)
 ### Why does not use Batch Norm
 - Sequence length of NLP tasks are not the same across each batch
 - hard to scale batch sizes since Transformers are usually very large
@@ -128,8 +129,37 @@ It effectively solves the problem of the problem of the out-of-vocabulary proble
 
    ![ntkinit](../pics/ntkinit.png)
 
+### Optimizer
+#### How to choose a correct optimizer duing training (e.g., Adam and SGD)
+There are mainly **three** factors to consider: (1) Stability (2) efficiency (3) Convergence
+| Optimizer  | Pros | Cons |
+|------------|------|------|
+| **Adam**  | - Fast convergence  🚀  | - High memory usage due to moment estimates 💾 |
+|            | - Works well with sparse gradients 🌟  | - Can overfit and generalize poorly 📉 |
+|            | - Less sensitive to learning rate tuning 🔧 | - Can lead to suboptimal solutions due to adaptive updates ⚠️ |
+| **AdamW** | - Reduces overfitting with decoupled weight decay 🏋️ | - Still memory-intensive 💾 |
+|            | - Better generalization than Adam 🌍 | - Requires careful tuning for best results 🎛️ |
+|            | - Stable for deep transformers 🏗️ | |
+| **SGD**   | - Strong generalization ability 🌱 | - Slow convergence 🐢 |
+|            | - Uses less memory than Adam/AdamW 🧠 | - Requires careful learning rate tuning 🎛️ |
+|            | - Good for fine-tuning LLMs 🎯 | - Sensitive to sharp loss landscapes|
+
 
 ### Norm
+#### Batch Norm VS Layer Norm
+| Feature         | **Batch Normalization (BatchNorm)** 🏋️ | **Layer Normalization (LayerNorm)** 🏗️ |
+|---------------|---------------------------------|---------------------------------|
+| **Normalization Axis** | Across the **batch dimension** (per feature) | Across the **feature dimension** (per sample) | |
+| **Computation Scope** | Uses batch statistics (mean & variance across batch) | Uses per-sample statistics (mean & variance within the same input) |
+| **Dependency on Batch Size** | Highly dependent on batch size (unstable for small batches) | Works well with small batch sizes |
+| **Use in Sequence Models (Transformers, RNNs)** | Not ideal (inconsistent statistics across steps) | Preferred (consistent across tokens/timesteps) |
+| **Use in CNNs** | Common in convolutional networks | Rare in CNNs |
+| **Computation Overhead** | Requires batch-level operations | Lighter and independent of batch statistics |
+| **Training Stability** | Can be unstable with very small batch sizes | More stable, especially in transformers |
+| **Common Applications** | CNNs (ResNet, EfficientNet), Vision models | Transformers (BERT, GPT), NLP, RNNs |
+
+
+
 #### RMS Norm
 Formulation:
 
@@ -155,8 +185,21 @@ Cons:
 
 PreNorm tends to be helpful to stabalize the model training since it allows **more freely** residual connections. However, it is easy to be trapped into local optima. PostNorm is more difficult to train but it helps adds the depth of the models.
 
-#### Post Deepnorm
+#### What are some other nomalization methods other than prenorm and postnorm?
+1. ScaleNorm:
+   
+![scaleNorm](../pics/scalenorm.png)
 
+normalizes an input vector by its L2 norm and then scales it with a learned parameter.
+
+Pros
+- It is more computationally efficient since it does not need to calculate the mean and variance.
+- It stablize gradient flows by constrainting their magnitude
+
+Cons
+- Since it lacks of centering, it will perform worse when feature centering is importatn
+- It might perform worse when the variance is high or have extreme outliers
+  
 
 
 ### Warm up
@@ -173,7 +216,8 @@ PreNorm tends to be helpful to stabalize the model training since it allows **mo
 
 ## Finetuning
 ### Difference between LoRA and SFT
-### LoRA
+### Peft
+#### LoRA
 ![loraform](../pics/loraform.png)
 The assumption is that during pretraining, the parameters of the models are very large. However, the intrinsic dimension of downstream tasks are not large. So, instead of finetuning the full weights, only modify A and B. The typical r is 8, under somecases, r could even be equal to 1. 
 
@@ -185,6 +229,11 @@ It depends on how lora is realized. We have two different ways of implementing l
 please see [link](https://kexue.fm/archives/9590/comment-page-2#comments) for detailed explanation.
 
 
+#### ReFT
+
+### RLHF
+
+
 ### Proximal Policy Optimization (PPO)
 
 On-Policy Formulation:
@@ -194,16 +243,29 @@ $$
 
 where:
 
-- \( J(\theta) \) is the objective function, typically the expected cumulative reward.
-- \( \pi_\theta (a_t | s_t) \) is the policy parameterized by \( \theta \), giving the probability of taking action \( a_t \) in state \( s_t \).
-- \( \nabla_\theta \log \pi_\theta (a_t | s_t) \) is the score function, representing how the log-probability of an action changes with respect to policy parameters.
-- \( G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k \) is the return, i.e., the sum of future discounted rewards from time step \( t \).
-- \( \gamma \in (0,1] \) is the discount factor.
-- The expectation \( \mathbb{E}_{\tau \sim \pi_\theta} \) is taken over trajectories \( \tau \) sampled from the policy \( \pi_\theta \).
+-  $J(\theta)$  is the objective function, typically the expected cumulative reward.
+- $\pi_\theta (a_t | s_t)$ is the policy parameterized by $\theta$, giving the probability of taking action $a_t$ in state $s_t$.
+- $\nabla_\theta \log \pi_\theta (a_t | s_t)$ is the score function, representing how the log-probability of an action changes with respect to policy parameters.
+- $G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k$ is the return, i.e., the sum of future discounted rewards from time step $t$.
+- $\gamma \in (0,1]$ is the discount factor.
+- The expectation $\mathbb{E}_{\tau \sim \pi_\theta}$ is taken over trajectories $\tau$ sampled from the policy $\pi_\theta$.
 
+Objective Function of PPO2:
 
+![ppoobj](../pics/ppoclip.png)
 
+where:
+
+- $r(\tau)$ is the reward function.
+- $\pi_\theta$ is the policy.
+- $\pi_0$ is the behavior policy.
+- $\epsilon$ is the clipping hyperparameter parameter.
+
+This algorithm is an alternative of KL divergence used in PPO. It constraint the differences between $r(\theta)$ and $r(\hat{\theta})$
+
+parameter change could be different from the action change. so the kl divergence is the distance between actions.
 ### Direct Preference Optimization (DPO)
+
 
 
 
@@ -218,7 +280,7 @@ It speeds up autoregressive text generation by using a fast proposal model to pr
 
 ### Why LLM repeats themselves, and how to solve this problem?
 
-
+### vLLM
 
 
 
