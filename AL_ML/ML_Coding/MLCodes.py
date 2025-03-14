@@ -1,7 +1,7 @@
-import torch
+import torch, math
 import torch.nn as nn
 import torch.nn.functional as F
-
+from collections import defaultdict
 
 class MultiHeadAttention(nn.Moudle):
     def __init__(self, n_embed, n_heads, dropout):
@@ -77,6 +77,8 @@ The algorithm works by iteratively merging the most frequent pair of consecutive
 Collected from the original paper: https://arxiv.org/abs/1508.07909
 """
 class BPE():
+    def __init__(self):
+        self.vocab = {}
     """
     Given a list of integers, return a dictionary of counts of consecutive pairs
     Example: {"l o w": 5, "l o w e r": 2} -> {('l', 'o'): 2, ('o', 'w'): 2, ...}
@@ -84,7 +86,7 @@ class BPE():
     """
     def get_stats(self, vocab):
         pairs = defaultdict(int)
-        for word, freq in vocabs.items():
+        for word, freq in self.vocabs.items():
             symbols = word.split()
             # calculate the frequency of alphabet pairs
             for i in range(len(symbols)-1):

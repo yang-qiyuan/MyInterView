@@ -117,17 +117,19 @@ It effectively solves the problem of the problem of the out-of-vocabulary proble
 ### Initialization
 1. Random Initialization
 2. Truncated Initialization
-   
    There are more variations in nomral init, and the result is bounded in uniform init. So, combining these two advantages in both, we have the truncated init. a and b are two standard deviation away from the mean. The real variance is $\gamma \sigma^2$. To get the real variance, one should pass the standard deviations as $\frac{\sigma}{\sqrt{\gamma}}$.
+
 3. Xavier Initialization
    
-   Xavier initialization, also known as Glorot initialization, is a method for setting neural network weights to keep the variance of activations roughly the same across layers. It does this by drawing initial weights from a distribution with a variance that depends on the number of input and output neurons, helping to mitigate the vanishing or exploding gradient problems during training.
+   Xavier initialization, also known as Glorot initialization, is a method for setting neural network weights to keep the variance of activations roughly the same across layers. **It does this by drawing initial weights from a distribution with a variance that depends on the number of input and output neurons**, helping to mitigate the vanishing or exploding gradient problems during training.
 
 4. NTK init
    
    Neural Tangent Kernel (NTK) initialization is a weight initialization scheme designed to ensure that deep neural networks behave like kernel methods in the infinite-width limit, preserving signal propagation and avoiding vanishing or exploding gradients. It scales weights based on the layer width, typically using $\mathcal{N}(0, \frac{2}{\text{fan-in}})$ for ReLU networks, ensuring stable gradient dynamics during training. So given the previous case in Xavier init, we need the $D=N(0, \frac{1}{m})$ as an initialization. So we could divide the output by $\frac{1}{\sqrt{m}}$ to get the same effect.
 
    ![ntkinit](../pics/ntkinit.png)
+
+5. Kaiming init
 
 ### Optimizer
 #### How to choose a correct optimizer duing training (e.g., Adam and SGD)
@@ -219,7 +221,18 @@ Cons
 ### Peft
 #### LoRA
 ![loraform](../pics/loraform.png)
+Previous method often fail to match the fine-tuning baselines, posing a trade-off between efficiency and model quality. It has a notable difference when doing online inference.
+
 The assumption is that during pretraining, the parameters of the models are very large. However, the intrinsic dimension of downstream tasks are not large. So, instead of finetuning the full weights, only modify A and B. The typical r is 8, under somecases, r could even be equal to 1. 
+
+It has Gaussian init for A, and 0 init for B. One goal is to introduce asymmetry.
+
+| Initialization Choice                 | Behavior                                              | Pros                                    | Cons                                      |
+|----------------------------------------|------------------------------------------------------|-----------------------------------------|-------------------------------------------|
+| A Gaussian, B zero (Standard LoRA) | Gradient wrt A is 0, gradient wrt B is not. LoRA starts with small random influence but doesn't immediately modify pretrained weights. | Stable training, efficient adaptation. | None (this is the standard approach). |
+| A Zero, B Gaussian | Gradient wrt A is not 0, gradient wrt B is zero. LoRA has **no effect initially**, slows learning. | Pretrained model is preserved initially. | Gradients don't flow well; slower adaptation. |
+| Both A and B Gaussian | Immediate LoRA influence, but potential instability. | Faster adaptation. | Might introduce noise at the start. |
+
 
 #### Does Lora really save the computational amount?
 It depends on how lora is realized. We have two different ways of implementing lora. Two ways of initialization is as follows:
@@ -230,6 +243,13 @@ please see [link](https://kexue.fm/archives/9590/comment-page-2#comments) for de
 
 
 #### ReFT
+
+![loreft](../pics/loreft.png)
+we use a learned projected source Rs = Wh + b. LoReFT thus editting the representation in the r-dimensional subspace spanned by the rows of R to take on the values obtained from our linear projection Wh + b.
+Note that the orthormality is not enforced, but set at initialization time.
+
+#### Prefix Tuning
+
 
 ### RLHF
 
