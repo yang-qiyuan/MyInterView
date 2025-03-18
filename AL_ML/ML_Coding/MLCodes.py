@@ -13,7 +13,7 @@ class MultiHeadAttention(nn.Moudle):
         # Q, K, V
         self.q = nn.Linear(n_embed, n_embed, bias=False)
         self.k = nn.Linear(n_embed, n_embed, bias=False)
-        self.v = nn.linear(n_embed, n_embed, bias=False)
+        self.v = nn.Linear(n_embed, n_embed, bias=False)
         # out projection
         self.o = nn.Linear(n_embed, n_embed, bias=False)
         # regularization

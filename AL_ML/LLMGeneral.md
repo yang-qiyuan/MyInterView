@@ -57,19 +57,40 @@ Instead, the author decoupled the RoPE into two separate vectors and concatenate
 [Link](https://0809zheng.github.io/2022/07/01/posencode.html)
 #### What is the shortcomings of learnable PE?
 You cannot exprapolate since the length of learnable parameters are typically fixed.
+
+### Absolute Encoding
+
 #### Sinusoidal Embeddings
 ![Sinusoidal embed](../pics/sinusoid_emb.png)
 Formula:
 ![Sin Formula](../pics/sin_emed_formula.png)
 Pros and Cons\
 Pros:
-- It is very bad at extrapolation. It may not have an ideal on how to deal with very long sequences.
 - Sin and Cos functions are continuous, providing **smooth** information
 - No additional trainable paprameters
 - 
 Cons:
 - No relative information, not expressive enough
 - Fixed frequency, not necessarily optimal for every NLP tasks.
+- It is very bad at extrapolation. It may not have an ideal on how to deal with very long sequences.
+
+#### Recursive Encoding (RNN)
+Typically, RNN does not need PE, it inherently has the property of PE. That is we could use RNN to learn an absolute encoding. An good example paper: [link](https://papers.cool/arxiv/2003.09229).
+
+
+### Relative Encoding
+
+#### Classical Method
+
+![classical](../pics/peclassical.png)
+
+To introduce relative position, google delete the $x_iW_Q$ in the first parenthesis and repalce the $W_k^Tp_j^T$ with $R_{i, j}^K$:
+
+![classrev](../pics/relativeclass.png)
+
+And it also clips very small and large value.
+
+
 
 #### RoPE
 ![rope](../pics/rope_formula.png)
@@ -82,6 +103,8 @@ Pros:
 Cons:
 - Does not encode absolute position, hard for tasks require absolute position
 - Hard to interpret since it is complex
+
+Su's Blog: [link](https://spaces.ac.cn/archives/8130)
   
 
 
