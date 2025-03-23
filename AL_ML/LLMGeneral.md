@@ -303,12 +303,18 @@ where:
 - $\pi_\theta$ is the policy.
 - $\pi_0$ is the behavior policy.
 - $\epsilon$ is the clipping hyperparameter parameter.
+- $A_t$ is the 
 
 This algorithm is an alternative of KL divergence used in PPO. It constraint the differences between $r(\theta)$ and $r(\hat{\theta})$
 
 parameter change could be different from the action change. so the kl divergence is the distance between actions.
-### Direct Preference Optimization (DPO)
 
+### Direct Preference Optimization (DPO)
+![dpo_loss](../pics/DPO.png)
+
+The only external information to the optimization comes from the preference labels.
+
+DPO is derived from the BT model
 
 
 
