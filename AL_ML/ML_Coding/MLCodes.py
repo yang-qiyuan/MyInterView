@@ -10,6 +10,7 @@ class MultiHeadAttention(nn.Moudle):
         self.n_embed = n_embed
         self.head_dim = n_embed // n_heads
 
+        self.flash = False
         # Q, K, V
         self.q = nn.Linear(n_embed, n_embed, bias=False)
         self.k = nn.Linear(n_embed, n_embed, bias=False)
@@ -32,13 +33,16 @@ class MultiHeadAttention(nn.Moudle):
         v = v.view(B, L, self.n_heads, C//self.n_heads).transpose(1, 2)
         # scaled dot-product attention
         # size: B, n_heads, L, L
-        att = (q @ k.transpose(-2, -1)*(1.0 / math.sqrt(k.size(-1))))
-        if mask is not None:
-            att = att.masked_fill(mask == 0, float('-inf'))
-        att = F.softmax(att, dim=-1)
-        att = self.attn_dropout(att)
-        # (B, n_heads, L, L) @ (B, n_heads, L, C//n_heads) -> (B, n_heads, L, C//n_heads)
-        y = att @ v 
+        if not self.flash:
+            att = (q @ k.transpose(-2, -1)*(1.0 / math.sqrt(k.size(-1))))
+            if mask is not None:
+                att = att.masked_fill(mask == 0, float('-inf'))
+            att = F.softmax(att, dim=-1)
+            att = self.attn_dropout(att)
+            # (B, n_heads, L, L) @ (B, n_heads, L, C//n_heads) -> (B, n_heads, L, C//n_heads)
+            y = att @ v 
+        else:
+            y = torch.nn.functional.scaled_dot_product_attention(q, k, v, is_causal=True)
         # concatenate all heads
         # contiguous makes the tensor stored in a contiguous chunk of memory
         y = y.transpose(1, 2).contiguous().view(B, L, C)
@@ -46,9 +50,9 @@ class MultiHeadAttention(nn.Moudle):
         return y
 
 # Transformer Block 
-class Block(nn.Moudle):
+class Decoder(nn.Moudle):
     def __init__(self, n_embed, n_heads, dropout):
-        super(Block, self).__init__()
+        super(Decoder, self).__init__()
         self.attn = MultiHeadAttention(n_embed, n_heads, dropout)
         self.mlp = nn.sequential(
             nn.Linear(n_embed, 4*n_embed),

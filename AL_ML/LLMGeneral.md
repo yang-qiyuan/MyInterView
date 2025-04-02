@@ -316,6 +316,8 @@ The only external information to the optimization comes from the preference labe
 
 DPO is derived from the BT model
 
+### InstructGPT
+
 
 
 
