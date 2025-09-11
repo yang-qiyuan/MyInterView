@@ -31,7 +31,7 @@ It is an IO-aware exact attention algorithm that reduces memory reads/writes bet
    - Load inputs by blocks from HBM to SRAM
    - On the chip, compute attn output wrt the block
    - Update output on HBM by scaling
-2. **Recomputation**: Do not store attn. matrix from forward, recompute it in backward. Efficient since normalization factors have been stored previously.  
+2. **Recomputation**: Do not store attn. matrix from forward, recompute it in backward path. Efficient since normalization factors have been stored previously.  
 3. 
 
 
@@ -68,7 +68,7 @@ Pros and Cons\
 Pros:
 - Sin and Cos functions are continuous, providing **smooth** information
 - No additional trainable paprameters
-- 
+  
 Cons:
 - No relative information, not expressive enough
 - Fixed frequency, not necessarily optimal for every NLP tasks.

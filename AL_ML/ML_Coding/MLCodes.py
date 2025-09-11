@@ -34,6 +34,7 @@ class MultiHeadAttention(nn.Moudle):
         # scaled dot-product attention
         # size: B, n_heads, L, L
         if not self.flash:
+            # scaled dot-product
             att = (q @ k.transpose(-2, -1)*(1.0 / math.sqrt(k.size(-1))))
             if mask is not None:
                 att = att.masked_fill(mask == 0, float('-inf'))
@@ -54,6 +55,8 @@ class Decoder(nn.Moudle):
     def __init__(self, n_embed, n_heads, dropout):
         super(Decoder, self).__init__()
         self.attn = MultiHeadAttention(n_embed, n_heads, dropout)
+        # MLP
+        # size: Batch size, sequence length, n_embed
         self.mlp = nn.sequential(
             nn.Linear(n_embed, 4*n_embed),
             nn.GELU(),
@@ -69,10 +72,25 @@ class Decoder(nn.Moudle):
         x = x + self.attn(self.ln1(x))
         x = x + self.mlp(self.ln2(x))
         return x
+    
+# class Encoder(nn.Moudle):
+#     # drop means the config of dropout
+#     def __init__(self, n_embed, n_heads, dropout):
+#         self.attn = MultiHeadAttention(n_embed, n_heads, dropout)
+#         self.mlp = nn.sequential(
+#             nn.Linear(n_embed, 4*n_embed),
+#             nn.GELU(),
+#             nn.Linear(4*n_embed, n_embed),
+#             nn.Dropout(dropout)
+#         )
+#         self.ln = nn.LayerNorm(n_embed)
+
+
 
 # Positional Encoding
 class PositionalEncoding(nn.Module):
-    def __init__(self, )
+    def __init__(self, ):
+        pass
         
 # Byte Pair Encoding
 """
