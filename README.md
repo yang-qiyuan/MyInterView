@@ -18,5 +18,3 @@ Here are the contents of Different Interview Questions for MLE and SDE:
       4. 
     2. Frontend
     3. System Design
- 3. Leetcode
-    1. [hot100](https://github.com/yang-qiyuan/MyInterView/blob/master/SDE/Leetcode_hot100.md)

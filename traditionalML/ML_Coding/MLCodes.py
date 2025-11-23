@@ -37,7 +37,7 @@ class MultiHeadAttention(nn.Moudle):
             # scaled dot-product
             att = (q @ k.transpose(-2, -1)*(1.0 / math.sqrt(k.size(-1)))) # (B, n_heads, L, L)
             if mask is not None:
-                att = att.masked_fill(mask == 0, float('-inf'))
+                att = att.masked_fill(mask == False, float('-inf'))
             att = F.softmax(att, dim=-1)
             att = self.attn_dropout(att)
             # (B, n_heads, L, L) @ (B, n_heads, L, h//n_heads) -> (B, n_heads, L, h//n_heads)
